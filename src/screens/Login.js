@@ -1,25 +1,32 @@
 import React, {useCallback, useContext, useState} from 'react';
 import {Text, StyleSheet, TextInput, View, TouchableOpacity, StatusBar, Image} from 'react-native';
-import image from "../assets/images/banner.jpeg";
-import {useDispatch} from 'react-redux';
-import {userLoginRequest} from '../redux/actions/user';
-import {Wrapper} from '../components/Wrapper';
-function ProfileLogin(props) {
+import {AuthContext} from "../context/AuthContext";
+import {Toast} from "toastify-react-native";
+import Api from "../Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+function Login({navigation}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+    const {login} = useContext(AuthContext)
     const handleSubmit = useCallback(async () => {
-        // if (!email || !password) {
-        //     // toast.error('Enter email and password');
-        //     return;
-        // }
-        console.log(email, password, );
-        await dispatch(userLoginRequest({email, password}));
+        try{
+            if (!email || !password) {
+                Toast.error('Enter email and password', 'top');
+                return;
+            }
+            const { data } = await Api.login({email, password})
+            if(data.status === 'ok'){
+                await AsyncStorage.setItem('token', data.token)
+                login(data.token)
+            }else{
+                Toast.error('Login or password is wrong', 'top');
+            }
+        }catch (e) {
+            console.log(e)
+        }
     }, [email, password]);
     return (
         <View style={styles.container}>
-            {/*<Image style={styles.image} source={image} />*/}
-            <StatusBar style="auto" />
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
@@ -37,7 +44,7 @@ function ProfileLogin(props) {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSubmit} style={styles.loginBtn}>
@@ -85,4 +92,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ProfileLogin;
+export default Login;

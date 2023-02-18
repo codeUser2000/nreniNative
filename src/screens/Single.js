@@ -1,12 +1,28 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import _ from 'lodash';
 import {API_URL} from "@env";
+import {AuthContext} from "../context/AuthContext";
 
 
 function Single({route}) {
     const [data, setData] = useState({});
     const [count, setCount] = useState(1);
+    const test = useContext(AuthContext)
+    const handleChange = useCallback((ev) => {
+        if (_.isNumber(+ev) || !ev) {
+            setCount(ev);
+            if (+ev < 0) {
+                setCount(1);
+            }
+            if (+ev > +data.countProduct) {
+                setCount(+data.countProduct);
+            }
+        } else if (_.isString(ev)) {
+            setCount(1);
+        }
+    }, [data]);
 
     const handleProductCountChange = useCallback((operator) => {
         console.log(data);
@@ -19,7 +35,6 @@ function Single({route}) {
 
     useEffect(() => {
         setData(route.params)
-        console.log(API_URL,route.params);
     },[route.params])
     return (
        <View style={styles.block}>
@@ -42,7 +57,10 @@ function Single({route}) {
                <Text style={styles.texts}>{data.description}</Text>
                <View style={{flexDirection:'row', alignItems:"center", flex:1, justifyContent: "space-between"}}>
                    <TouchableOpacity onPress={() => handleProductCountChange('delete')}><Text style={styles.count} >-</Text></TouchableOpacity>
-                   <TextInput value={count + ''} editable={false} style={styles.count}/>
+                   <TextInput
+                       value={count + ''}
+                       onChange={(ev) => handleChange(ev.target.value)}
+                       style={styles.count}/>
                    <TouchableOpacity onPress={() => handleProductCountChange('add')}><Text style={styles.count} >+</Text></TouchableOpacity>
                </View>
                <TouchableOpacity style={styles.addToCart}><Text style={{color:"#c31e39", fontSize:20}}>Add to cart</Text></TouchableOpacity>

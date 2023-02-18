@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {Text, TextInput, StyleSheet, View, Button, TouchableOpacity, Image, ImageBackground} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {Text, StyleSheet, View, Button, TouchableOpacity, Image} from 'react-native';
 import img from '../assets/images/banner.jpeg'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 function StartProfile({navigation}) {
-    const [text, onChangeText] = React.useState("Useless Text");
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor:'white'}}>
             <Text style={{alignSelf:'center',fontSize:30}}>Welcome</Text>
+            <Image source={img} style={{ resizeMode: 'contain',
+                height: 400,
+                width: 400,}}/>
             <View style={{justifyContent:'flex-end', flex:2}}>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigation.navigate('ProfileLogin')}
+                    onPress={() => navigation.navigate('Login')}
                 >
                     <Text
                         style={styles.buttonText}
@@ -20,7 +20,7 @@ function StartProfile({navigation}) {
                 <Text style={{alignSelf:'center'}}>Or</Text>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigation.navigate('ProfileRegister')}
+                    onPress={() => navigation.navigate('Register')}
                 >
                     <Text
                         style={styles.buttonText}
