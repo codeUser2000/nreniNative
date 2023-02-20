@@ -5,6 +5,7 @@ export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
 export const USER_REGISTER_FAIL = 'USER_REGISTER_FAIL';
 
 export function userRegisterRequest(formData) {
+
     return async (dispatch) => {
         try {
             dispatch({

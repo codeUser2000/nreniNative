@@ -26,7 +26,6 @@ function AboutMe({show, setShow, data}) {
     }, [data]);
 
     const handleSubmit = useCallback(async () => {
-        console.log(1223)
         await dispatch(userUpdateRequest(profile))
     }, [profile])
 

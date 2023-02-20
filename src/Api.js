@@ -33,8 +33,13 @@ class Api {
         return api.get('/categories/category');
     }
 
-    static userSelfDelete(email) {
-        return api.post('/users/deleteSelf', {email});
+    static async userSelfDelete(email) {
+        auth = await AsyncStorage.getItem('token')
+        return api.post('/users/deleteSelf', {email}, {
+            headers: {
+                Authorization: auth
+            },
+        });
     }
 
     static setBlockquote(data) {

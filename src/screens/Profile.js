@@ -83,7 +83,7 @@ function Profile({navigation}) {
                     </TouchableOpacity>
                 </View>
                 <AboutMe show={show} setShow={setShow} data={profile}/>
-                <DeleteMe show={showDelete} setShow={setShowDelete}/>
+                <DeleteMe show={showDelete} setShow={setShowDelete} email={profile.email}/>
             </View>
         </>
     );
