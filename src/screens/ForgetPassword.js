@@ -4,6 +4,8 @@ import {useDispatch} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../Api";
 import {Toast} from "toastify-react-native";
+import LogoHeader from "../components/LogoHeader";
+import SubmitBtn from "../components/SubmitBtn";
 function ForgetPassword({navigation}) {
     const [email, setEmail] = useState("");
     const handlePassWordChange = useCallback(async () => {
@@ -23,22 +25,27 @@ function ForgetPassword({navigation}) {
         }
     }, [email])
     return (
-        <View style={{flex:1, backgroundColor:'white'}}>
-            <Text>Set new Password</Text>
+        <View style={{ paddingHorizontal: 40, backgroundColor: 'white', flex: 1,}}>
+        <LogoHeader title="New password"/>
+            <Text style={{ marginLeft:10, fontSize: 20 }}>Enter your email</Text>
             <TextInput
                 onChangeText={(ev) => setEmail(ev)}
                 style={styles.input}
             />
-            <TouchableOpacity onPress={handlePassWordChange}><Text>Submit</Text></TouchableOpacity>
+            <SubmitBtn handleSubmit={handlePassWordChange} title="Submit" />
         </View>
     );
 }
 const styles = StyleSheet.create({
     input: {
-        height: 40,
         margin: 12,
-        borderWidth: 1,
         padding: 10,
+        fontSize: 20,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 60
     },
     button:{
         height: 40,

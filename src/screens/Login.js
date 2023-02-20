@@ -1,95 +1,91 @@
 import React, {useCallback, useContext, useState} from 'react';
-import {Text, StyleSheet, TextInput, View, TouchableOpacity, StatusBar, Image} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {AuthContext} from "../context/AuthContext";
 import {Toast} from "toastify-react-native";
 import Api from "../Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MyInputs from "../components/MyInputs";
+import img from "../assets/images/logo.png";
+import LogoHeader from "../components/LogoHeader";
+import SubmitBtn from "../components/SubmitBtn";
+
 function Login({navigation}) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const handleChange = useCallback((key, value) => {
+        setFormData((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    }, [formData]);
     const {login} = useContext(AuthContext)
     const handleSubmit = useCallback(async () => {
-        try{
-            if (!email || !password) {
+        try {
+            if (!formData.email || !formData.password) {
                 Toast.error('Enter email and password', 'top');
                 return;
             }
-            const { data } = await Api.login({email, password})
-            if(data.status === 'ok'){
+            const {data} = await Api.login(formData)
+            if (data.status === 'ok') {
                 await AsyncStorage.setItem('token', data.token)
                 login(data.token)
-            }else{
-                Toast.error('Login or password is wrong', 'top');
             }
-        }catch (e) {
-            console.log(e)
+        } catch (e) {
+            Toast.error(e.response.data.message)
         }
-    }, [email, password]);
+    }, [formData]);
     return (
-        <View style={styles.container}>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Email."
-                    placeholderTextColor="#ffffff"
-                    onChangeText={(email) => setEmail(email)}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Password."
-                    placeholderTextColor="#ffffff"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
+        <View style={{ paddingHorizontal: 40, backgroundColor: 'white', flex: 1,}}>
+            <LogoHeader title="Sign in"/>
+            <Text style={{ marginLeft:10, fontSize: 20 }}>Enter your email</Text>
+
+            <MyInputs
+                value={formData.email}
+                placeholder=""
+                keyValue="email"
+                handleChange={handleChange}
+            />
+            <Text style={{ marginLeft:10, fontSize: 20 }}>Enter your password</Text>
+
+            <MyInputs
+                value={formData.password}
+                placeholder=""
+                isPass={true}
+                keyValue="password"
+                handleChange={handleChange}
+            />
+            <TouchableOpacity style={{flexDirection: 'row', width: 300,justifyContent: 'center', alignSelf: 'center'}} onPress={() => navigation.navigate('ForgetPassword')}>
+                <Text>Forgot Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSubmit} style={styles.loginBtn}>
-                <Text style={{color: 'white'}}>LOGIN</Text>
+            <SubmitBtn handleSubmit={handleSubmit} title="Login" />
+            <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{flexDirection: 'row', width: 300,justifyContent: 'center', alignSelf: 'center'}}>
+                <Text>Or sign up</Text>
             </TouchableOpacity>
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
     },
     image: {
         marginBottom: 40,
     },
-    inputView: {
-        backgroundColor: "#e56277",
-        borderRadius: 30,
-        width: "70%",
-        height: 45,
-        marginBottom: 20,
-        alignItems: "center",
-    },
-    TextInput: {
-        height: 50,
-        flex: 1,
+    input: {
+        margin: 12,
         padding: 10,
-        marginLeft: 20,
+        fontSize: 20,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 60
     },
-    forgot_button: {
-        height: 30,
-        marginBottom: 30,
-    },
-    loginBtn: {
-        width: "80%",
-        borderRadius: 25,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 40,
-        backgroundColor: "#c31e39",
-    }
+
 });
 
 export default Login;

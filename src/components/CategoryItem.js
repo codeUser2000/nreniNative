@@ -4,13 +4,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
 import {searchRequest} from '../redux/actions/search';
 
-function CategoryItem({item}) {
+function CategoryItem({item, setSearch}) {
     const dispatch = useDispatch();
     const handleProductSearch = useCallback( async (categ) => {
         if(categ === 'all'){
             await dispatch(searchRequest({page:1}));
             return;
         }
+        setSearch(categ)
         await dispatch(searchRequest({page:1, filter: categ}))
     }, [])
     return (

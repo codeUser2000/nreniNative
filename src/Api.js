@@ -8,7 +8,6 @@ let auth = null;
     auth = await AsyncStorage.getItem('token')
 })()
 const api = axios.create({
-
     baseURL: API_URL,
     headers: {
         Authorization: auth,
@@ -23,7 +22,7 @@ api.interceptors.request.use(
 
 class Api {
     static getData(data) {
-        return api.get(`/products/products?page=${data.page}${data.filter ? `&filter=${data.filter}` : ''}`, {
+        return api.get(`/products/products?page=${data.page}${data.filter ? `&filter=${data.filter}` : ''}${data.search ? `&searchText=${data.search}` : ''}`, {
             headers: {
                 'Content-Type': 'image/jpeg',
             },
@@ -66,6 +65,15 @@ class Api {
         return api.post('/users/register', data);
     }
 
+    static async addresses(data) {
+        const auth = await AsyncStorage.getItem('token')
+        return api.post('/users/addresses', data, {
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
     static confirm() {
         return api.get('/users/confirm');
     }
@@ -90,6 +98,29 @@ class Api {
         });
     }
 
+    static async likeProduct(productId) {
+        const auth = await AsyncStorage.getItem('token')
+        console.log(1222)
+        return api.post('others/like', { productId }, {
+            headers: {
+                Authorization: auth
+            },
+        });
+
+    }
+
+    static async deleteLikeProduct(productId) {
+        const auth = await AsyncStorage.getItem('token')
+        return api.post('others/likeDelete', { productId } ,{
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
+    static async getSingle(id) {
+        return api.get(`/products/singleProduct?id=${id}`);
+    }
 
 }
 

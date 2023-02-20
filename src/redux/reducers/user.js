@@ -1,7 +1,7 @@
 import {
-    USER_LOGIN_FAIL,
-    USER_LOGIN_REQUEST,
-    USER_LOGIN_SUCCESS, USER_PROFILE_FAIL,
+    USER_REGISTER_FAIL,
+    USER_REGISTER_REQUEST,
+    USER_REGISTER_SUCCESS, USER_PROFILE_FAIL,
     USER_PROFILE_REQUEST,
     USER_PROFILE_SUCCESS
 } from '../actions/user';
@@ -13,19 +13,19 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case USER_LOGIN_REQUEST: {
+        case USER_REGISTER_REQUEST: {
             return {
                 ...state,
                 userDataStatus: 'request',
             };
         }
-        case USER_LOGIN_SUCCESS: {
+        case USER_REGISTER_SUCCESS: {
             return {
                 ...state,
                 userDataStatus: 'ok',
             };
         }
-        case  USER_LOGIN_FAIL: {
+        case  USER_REGISTER_FAIL: {
             return {
                 ...state,
                 userDataStatus: 'fail',

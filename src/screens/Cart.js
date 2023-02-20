@@ -1,9 +1,11 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 
 function Cart(props) {
     return (
-        <Text>Cart</Text>
+        <View style={{flex: 1, backgroundColor:'white'}}>
+            {/*<FlatList data={} renderItem={} />*/}
+        </View>
     );
 }
 

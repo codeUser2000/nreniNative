@@ -16,10 +16,11 @@ const style = StyleSheet.create({
         margin: 12,
         padding: 10,
         fontSize: 20,
-        borderBottomWidth: 1,
+        borderWidth: 1,
         borderColor: '#ccc',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 60
     },
 });
 
