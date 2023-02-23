@@ -6,10 +6,10 @@ import category from "../category";
 import img from '../assets/images/banner.jpeg';
 import {API_URL} from "@env";
 import _ from 'lodash';
-import {FlatList, Image, StyleSheet, Text, View} from "react-native";
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ProductByCategory from "../components/ProductByCategory";
 
-function Home() {
+function Home({navigation}) {
     const product = useSelector((state) => state.reducer.search.product);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -21,7 +21,7 @@ function Home() {
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 10}}>
             <View style={styles.top}>
-                <Text>category icon</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Categories')}><Text>category icon</Text></TouchableOpacity>
                 <Text>profile icon</Text>
             </View>
             <View style={styles.banner}>
@@ -54,8 +54,8 @@ function Home() {
 
 const styles = StyleSheet.create({
     banner: {
-        flex: 1,
         padding: 10,
+        height: 100,
         // width: '100%',
         flexDirection:'row',
         marginBottom: 30,
