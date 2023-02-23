@@ -56,8 +56,7 @@ const styles = StyleSheet.create({
     banner: {
         flex: 1,
         padding: 10,
-        height: 500,
-        width: '100%',
+        // width: '100%',
         flexDirection:'row',
         marginBottom: 30,
         borderRadius: 25,

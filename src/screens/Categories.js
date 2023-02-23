@@ -4,7 +4,7 @@ import {View} from "react-native";
 function Categories(props) {
     return (
         <View>
-
+            Hello
         </View>
     );
 }
