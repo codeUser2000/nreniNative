@@ -2,11 +2,11 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchRequest} from '../redux/actions/search';
 import ProductNewItem from '../components/ProductNewItem';
-import MasonryList from '@react-native-seoul/masonry-list';
 import category from "../category";
+import img from '../assets/images/banner.jpeg';
 import {API_URL} from "@env";
 import _ from 'lodash';
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import {FlatList, Image, StyleSheet, Text, View} from "react-native";
 import ProductByCategory from "../components/ProductByCategory";
 
 function Home() {
@@ -20,7 +20,12 @@ function Home() {
     }, []);
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 10}}>
+            <View style={styles.top}>
+                <Text>category icon</Text>
+                <Text>profile icon</Text>
+            </View>
             <View style={styles.banner}>
+                <Image resizeMode="cover" source={img} style={styles.bannerImg}/>
                 <Text style={styles.welcome}>Welcome to SILVER NRENI page</Text>
             </View>
             <Text style={{fontSize: 30}}>New product</Text>
@@ -49,16 +54,25 @@ function Home() {
 
 const styles = StyleSheet.create({
     banner: {
-        height: 250,
+        flex: 1,
+        padding: 10,
+        height: 500,
         width: '100%',
-        borderRadius: 50,
+        marginBottom: 30,
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#ffece5',
     },
+    bannerImg: {
+        width: '50%',
+        height: '100%',
+        borderRadius: 25,
+    },
     welcome: {
-        fontSize: 23,
+        width: '50%',
+        fontSize: 18,
         color: '#c31e39',
-        lineHeight: 250,
-        textAlign: 'center',
     },
 });
 
