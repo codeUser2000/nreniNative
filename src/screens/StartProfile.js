@@ -1,53 +1,108 @@
 import React from 'react';
-import {Text, StyleSheet, View, Button, TouchableOpacity, Image} from 'react-native';
-import img from '../assets/images/banner.jpeg'
+import {Text, StyleSheet, View, Button, ImageBackground, TouchableOpacity, Image} from 'react-native';
+import img from '../assets/images/post/banner2.jpg'
+
 function StartProfile({navigation}) {
     return (
-        <View style={{flex:1, backgroundColor:'white'}}>
-            <Text style={{alignSelf:'center',fontSize:30}}>Welcome</Text>
-            <Image source={img} style={{ resizeMode: 'contain',
-                height: 400,
-                width: 400,}}/>
-            <View style={{justifyContent:'flex-end', flex:2}}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigation.navigate('Login')}
-                >
-                    <Text
-                        style={styles.buttonText}
-                    >Go and login</Text>
-                </TouchableOpacity>
-                <Text style={{alignSelf:'center'}}>Or</Text>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigation.navigate('Register')}
-                >
-                    <Text
-                        style={styles.buttonText}
-                    >Go and Register</Text>
-                </TouchableOpacity>
+        <ImageBackground source={img} resizeMode="cover" style={styles.start}>
+            <View style={styles.layout}>
+                <Text style={styles.title}>nreni</Text>
+                <Text style={styles.info}>Sign up now and shop the most modern jewelry</Text>
+                <View style={styles.startNBtm}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Login')}
+                    >
+                        <Text style={styles.buttonText}>sign in</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.or}>Or</Text>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Register')}
+                    >
+                        <Text style={styles.buttonText}>sign up</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+        </ImageBackground>
+        // <View style={{flex: 1, backgroundColor: 'white'}}>
+        //     <Text style={{alignSelf: 'center', fontSize: 30}}>Welcome</Text>
+        //     <Image source={img} style={styles.bannerImg}/>
+        //     <View style={{justifyContent: 'flex-end', flex: 2}}>
+        //         <TouchableOpacity
+        //             style={styles.button}
+        //             onPress={() => navigation.navigate('Login')}
+        //         >
+        //             <Text
+        //                 style={styles.buttonText}
+        //             >Go and login</Text>
+        //         </TouchableOpacity>
+        //         <Text style={{alignSelf: 'center'}}>Or</Text>
+        //         <TouchableOpacity
+        //             style={styles.button}
+        //             onPress={() => navigation.navigate('Register')}
+        //         >
+        //             <Text
+        //                 style={styles.buttonText}
+        //             >Go and Register</Text>
+        //         </TouchableOpacity>
+        //     </View>
+        // </View>
     );
 }
+
 const styles = StyleSheet.create({
-    input: {
+    start: {
+        width: '100%',
+        height: '100%',
+    },
+    layout: {
+        flex: 2,
+        padding: 30,
+        width: '100%',
+        backgroundColor: 'rgba(0,0,0,0.70)',
+    },
+    startInfo: {
+        marginTop: 300,
+    },
+    title: {
+        fontSize: 25,
+        color: 'white',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+    },
+    info: {
+        flex: 3,
+        fontSize: 30,
+        color: 'white',
+        marginTop: 250,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        textAlign: 'center',
+    },
+    bannerBtm: {
+        flex: 4,
+        paddingBottom: 50,
+        justifyContent: 'flex-end',
+    },
+    button: {
         height: 40,
         margin: 12,
-        borderWidth: 1,
-        padding: 10,
+        padding: 5,
+        borderRadius: 50,
+        backgroundColor: '#c31e39'
     },
-    button:{
-        height: 40,
-        margin: 12,
-        padding: 10,
-        borderRadius:40,
-        backgroundColor:'#c31e39'
+    buttonText: {
+        fontSize: 18,
+        color: 'white',
+        textAlign: 'center',
+        textTransform: 'capitalize',
     },
-    buttonText:{
-        color:'white',
-        textAlign:'center',
-    }
+    or: {
+        fontSize: 18,
+        color: 'white',
+        alignSelf: 'center',
+    },
 });
 
 export default StartProfile;

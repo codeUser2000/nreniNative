@@ -6,7 +6,7 @@ import MasonryList from '@react-native-seoul/masonry-list';
 import category from "../category";
 import {API_URL} from "@env";
 import _ from 'lodash';
-import {FlatList, Text, View} from "react-native";
+import {FlatList, StyleSheet, Text, View} from "react-native";
 import ProductByCategory from "../components/ProductByCategory";
 
 function Home() {
@@ -19,8 +19,11 @@ function Home() {
         console.log(API_URL);
     }, []);
     return (
-        <View style={{ backgroundColor: 'white', flex: 1, padding:10}}>
-            <Text style={{fontSize:30}}>New product</Text>
+        <View style={{backgroundColor: 'white', flex: 1, padding: 10}}>
+            <View style={styles.banner}>
+                <Text style={styles.welcome}>Welcome to SILVER NRENI page</Text>
+            </View>
+            <Text style={{fontSize: 30}}>New product</Text>
             <FlatList
                 keyExtractor={() => _.uniqueId()}
                 data={product}
@@ -28,7 +31,7 @@ function Home() {
                 renderItem={({item}) => <ProductNewItem api={API_URL} item={item}/>}
                 style={{flexGrow: 0}}
             />
-            <Text style={{fontSize:30, marginBottom: 10}}>Categories product</Text>
+            <Text style={{fontSize: 30, marginBottom: 10}}>Categories product</Text>
             <FlatList
                 data={category}
                 keyExtractor={(item) => item.id}
@@ -43,5 +46,20 @@ function Home() {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    banner: {
+        height: 250,
+        width: '100%',
+        borderRadius: 50,
+        backgroundColor: '#ffece5',
+    },
+    welcome: {
+        fontSize: 23,
+        color: '#c31e39',
+        lineHeight: 250,
+        textAlign: 'center',
+    },
+});
 
 export default Home;
