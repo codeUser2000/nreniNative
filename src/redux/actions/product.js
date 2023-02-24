@@ -25,6 +25,31 @@ export function likeRequest(id) {
         }
     }
 }
+
+export const PRODUCT_DELETE_LIKE_REQUEST = 'PRODUCT_DELETE_LIKE_REQUEST';
+export const PRODUCT_DELETE_LIKE_SUCCESS = 'PRODUCT_DELETE_LIKE_SUCCESS';
+export const PRODUCT_DELETE_LIKE_FAIL = 'PRODUCT_DELETE_LIKE_FAIL';
+
+export function deleteLikeRequest(id) {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: PRODUCT_DELETE_LIKE_REQUEST,
+                payload: {}
+            })
+            const { data } = await Api.deleteLikeProduct(id)
+            dispatch({
+                type: PRODUCT_DELETE_LIKE_SUCCESS,
+                payload: { data }
+            })
+        } catch (e) {
+            dispatch({
+                type: PRODUCT_DELETE_LIKE_FAIL,
+                payload: {}
+            })
+        }
+    }
+}
 export const SINGLE_PRODUCT_REQUEST = 'SINGLE_PRODUCT_REQUEST';
 export const SINGLE_PRODUCT_SUCCESS = 'SINGLE_PRODUCT_SUCCESS';
 export const SINGLE_PRODUCT_FAIL = 'SINGLE_PRODUCT_FAIL';
