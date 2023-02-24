@@ -13,23 +13,30 @@ function Single({route}) {
     const [isLiked, setIsLiked] = useState(1);
     const dispatch = useDispatch();
     const handleChange = useCallback((ev) => {
-        if (_.isNumber(+ev) || !ev) {
-            setCount(ev);
+        if (_.isNumber(+ev) || ev) {
             if (+ev < 0) {
                 setCount(1);
+            }else{
+                setCount(ev);
             }
             if (+ev > +data.countProduct) {
                 setCount(+data.countProduct);
             }
-        } else if (_.isString(ev)) {
+        } else {
             setCount(1);
         }
     }, [data]);
     const product = useSelector((state) => state.reducer.product.singleData);
 
-    // const handleLike = useCallback(async (productId) => {
-    //     await dispatch(likeRequest(productId))
-    // }, [])
+    const handleLike = useCallback(async (product) => {
+        if(product.isLiked){
+            setIsLiked(false)
+            await dispatch(likeRequest(product.id))
+        } else{
+            setIsLiked(true)
+            await dispatch(likeRequest(product.id))
+        }
+    }, [])
 
     const handleProductCountChange = useCallback((operator) => {
         if (operator === 'add' && +count < +data.countProduct) {
@@ -62,9 +69,9 @@ function Single({route}) {
                 <View style={styles.bottom}>
                     <View style={styles.topBlock}>
                         <Text style={styles.price}>Price</Text>
-                        <TouchableOpacity style={{flexDirection:'row', alignItems:"center"}} onPress={() => handleLike(data.id)}>
-                            <Icon name="favorite" style={styles.price} color={isLiked? 'red' : "white"}/>
-                            <Text style={styles.texts}>{data.likeCount?.length}</Text>
+                        <TouchableOpacity style={{flexDirection:'row', alignItems:"center"}} onPress={() => handleLike(data)}>
+                            <Icon name="favorite" style={styles.price} color='red'/>
+                            <Text style={styles.texts}>{isLiked+ ''}</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -72,8 +79,9 @@ function Single({route}) {
                     <View style={{flexDirection:'row', alignItems:"center", flex:1, justifyContent: "space-between"}}>
                         <TouchableOpacity onPress={() => handleProductCountChange('delete')}><Text style={styles.count} >-</Text></TouchableOpacity>
                         <TextInput
+                            keyboardType='numeric'
                             value={count + ''}
-                            onChange={(ev) => handleChange(ev.target.value)}
+                            onChangeText={(ev) => handleChange(ev)}
                             style={styles.count}/>
                         <TouchableOpacity onPress={() => handleProductCountChange('add')}><Text style={styles.count} >+</Text></TouchableOpacity>
                     </View>
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
         flex:2,
         borderTopStartRadius:20,
         borderTopEndRadius:20,
-        backgroundColor: '#c31e39',
+        backgroundColor: '#ccc',
         paddingHorizontal:30,
         paddingVertical:10
 

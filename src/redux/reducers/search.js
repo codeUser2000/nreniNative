@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 productStatus: 'ok',
-                product: action.payload.data.product
+                product: action.payload.data.products
             }
         }
         case  SEARCH_FAIL: {

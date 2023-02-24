@@ -4,7 +4,6 @@ export const PRODUCT_LIKE_SUCCESS = 'PRODUCT_LIKE_SUCCESS';
 export const PRODUCT_LIKE_FAIL = 'PRODUCT_LIKE_FAIL';
 
 export function likeRequest(id) {
-    console.log(id)
     return async (dispatch) => {
         try {
             dispatch({
