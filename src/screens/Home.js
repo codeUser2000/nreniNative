@@ -21,7 +21,8 @@ function Home({navigation}) {
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 10}}>
             <View style={styles.top}>
-                <TouchableOpacity onPress={() => navigation.navigate('Categories')}><Text>category icon</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Categories')}><Text>category
+                    icon</Text></TouchableOpacity>
                 <Text>profile icon</Text>
             </View>
             <View style={styles.banner}>
@@ -55,11 +56,11 @@ function Home({navigation}) {
 const styles = StyleSheet.create({
     banner: {
         padding: 10,
-        height: 100,
-        // width: '100%',
-        flexDirection:'row',
+        height: 200,
+        marginRight: 15,
         marginBottom: 30,
         borderRadius: 25,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ffece5',
@@ -67,12 +68,14 @@ const styles = StyleSheet.create({
     bannerImg: {
         width: '50%',
         height: '100%',
+        marginRight: 15,
         borderRadius: 25,
     },
     welcome: {
         width: '50%',
-        fontSize: 18,
+        fontSize: 25,
         color: '#c31e39',
+        textAlign: 'center',
     },
 });
 

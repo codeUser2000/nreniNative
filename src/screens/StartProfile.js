@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, StyleSheet, View, Button, ImageBackground, TouchableOpacity, Image} from 'react-native';
-import img from '../assets/images/post/banner2.jpg'
+import {Text, StyleSheet, View, ImageBackground, TouchableOpacity} from 'react-native';
+import img from '../assets/images/start.jpg'
 
 function StartProfile({navigation}) {
     return (
@@ -25,29 +25,6 @@ function StartProfile({navigation}) {
                 </View>
             </View>
         </ImageBackground>
-        // <View style={{flex: 1, backgroundColor: 'white'}}>
-        //     <Text style={{alignSelf: 'center', fontSize: 30}}>Welcome</Text>
-        //     <Image source={img} style={styles.bannerImg}/>
-        //     <View style={{justifyContent: 'flex-end', flex: 2}}>
-        //         <TouchableOpacity
-        //             style={styles.button}
-        //             onPress={() => navigation.navigate('Login')}
-        //         >
-        //             <Text
-        //                 style={styles.buttonText}
-        //             >Go and login</Text>
-        //         </TouchableOpacity>
-        //         <Text style={{alignSelf: 'center'}}>Or</Text>
-        //         <TouchableOpacity
-        //             style={styles.button}
-        //             onPress={() => navigation.navigate('Register')}
-        //         >
-        //             <Text
-        //                 style={styles.buttonText}
-        //             >Go and Register</Text>
-        //         </TouchableOpacity>
-        //     </View>
-        // </View>
     );
 }
 

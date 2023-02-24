@@ -20,9 +20,9 @@ function Profile({navigation}) {
         await logout()
     }, [logout])
 
-    const handleOrder = useCallback(() => {
-
-    }, [])
+    // const handleOrder = useCallback(() => {
+    //
+    // }, [])
 
 
     useEffect(() => {
@@ -38,9 +38,15 @@ function Profile({navigation}) {
     return (
         <>
             {_.isEmpty(profile) ? <Text>loading...</Text> : null}
-            <View style={{flex: 1, backgroundColor: 'white'}}>
-                <Text style={styles.text}>Hello {profile.firstName} {profile.lastName}</Text>
-                <Text style={styles.text}>{profile.phone}</Text>
+            <View style={{flex: 1, backgroundColor: 'white', padding: 20}}>
+                <View style={styles.top}>
+                    <Text style={styles.topTitle}>My account</Text>
+                    <Text style={styles.hello}>
+                        Hello
+                        {' '}
+                        <Text style={styles.name}>{profile.firstName} {profile.lastName}</Text>
+                    </Text>
+                </View>
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
                     <TouchableOpacity
                         style={styles.buttons}
@@ -90,11 +96,24 @@ function Profile({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    text: {
-        margin: 12,
-        padding: 10,
+    top: {
+        textAlign: 'center',
+    },
+    topTitle: {
+        fontSize: 30,
+        color: '#c31e39',
+        marginBottom: 15,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textTransform: 'capitalize'
+    },
+    hello: {
         fontSize: 20,
-        alignSelf: 'center',
+        color: '#4a4a4a',
+        textAlign: 'center',
+    },
+    name: {
+        color: "#c31e39",
     },
     buttons: {
         margin: 12,

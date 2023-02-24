@@ -52,7 +52,6 @@ class Api {
 
     static login(data) {
         console.log(data)
-
         return api.post('/users/login', data);
     }
 
