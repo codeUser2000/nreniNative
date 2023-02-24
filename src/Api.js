@@ -42,12 +42,17 @@ class Api {
         });
     }
 
-    static setBlockquote(data) {
-        return api.post('/users/blockquote', data);
-    }
-
-    static getBlockquote() {
-        return api.get('/users/getBlockquote');
+    static async addToCart(data) {
+        const auth = await AsyncStorage.getItem('token')
+        return api.post('/cart/addToCart', {
+            productId: data.product.id,
+            quantity: data.quantity,
+            price: data.price,
+        }, {
+            headers: {
+                Authorization: auth
+            },
+        });
     }
 
     static login(data) {
@@ -86,7 +91,6 @@ class Api {
 
     static async getProfile() {
         const auth = await AsyncStorage.getItem('token')
-
         return api.get('/users/profile', {
             headers: {
                 Authorization: auth
@@ -106,7 +110,6 @@ class Api {
 
     static async likeProduct(productId) {
         const auth = await AsyncStorage.getItem('token')
-        console.log(1222)
         return api.post('others/like', { productId }, {
             headers: {
                 Authorization: auth
@@ -125,7 +128,12 @@ class Api {
     }
 
     static async getSingle(id) {
-        return api.get(`/products/singleProduct?id=${id}`);
+        const auth = await AsyncStorage.getItem('token')
+        return api.get(`/products/singleProduct?id=${id}`, {
+            headers: {
+                Authorization: auth
+            },
+        });
     }
 
 }

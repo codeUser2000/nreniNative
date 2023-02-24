@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import _ from 'lodash';
 import {API_URL} from "@env";
 import {useDispatch, useSelector} from "react-redux";
-import {likeRequest, singleRequest} from "../redux/actions/product";
+import {deleteLikeRequest, likeRequest, singleRequest} from "../redux/actions/product";
+import {addToCardRequest} from "../redux/actions/card";
 
 
 function Single({route}) {
@@ -29,23 +30,32 @@ function Single({route}) {
     const product = useSelector((state) => state.reducer.product.singleData);
 
     const handleLike = useCallback(async (product) => {
-        if(product.isLiked){
+        if(isLiked){
             setIsLiked(false)
-            await dispatch(likeRequest(product.id))
+            await dispatch(deleteLikeRequest(product.product.id))
         } else{
             setIsLiked(true)
-            await dispatch(likeRequest(product.id))
+            await dispatch(likeRequest(product.product.id))
         }
-    }, [])
+    }, [isLiked])
 
     const handleProductCountChange = useCallback((operator) => {
         if (operator === 'add' && +count < +data.countProduct) {
             setCount(+count + 1);
-        } else if (operator === 'delete' && +count > 0) {
+        } else if (operator === 'delete' && +count > 1) {
             setCount(+count - 1);
         }
     }, [data, count]);
 
+
+    const handleAddToCart = useCallback(async (data) => {
+        const product = {
+            quantity: count,
+            price: +data.newPrice * count,
+            product: data,
+        };
+        await dispatch(addToCardRequest(product));
+    }, [])
     useEffect(() => {
         (async () => {
            await dispatch(singleRequest(route.params))
@@ -54,7 +64,6 @@ function Single({route}) {
     useEffect(() => {
         setData(product.product)
         setIsLiked(product.isLiked)
-        console.log(product)
     },[product])
     return (
         <>
@@ -69,8 +78,8 @@ function Single({route}) {
                 <View style={styles.bottom}>
                     <View style={styles.topBlock}>
                         <Text style={styles.price}>Price</Text>
-                        <TouchableOpacity style={{flexDirection:'row', alignItems:"center"}} onPress={() => handleLike(data)}>
-                            <Icon name="favorite" style={styles.price} color='red'/>
+                        <TouchableOpacity style={{flexDirection:'row', alignItems:"center"}} onPress={() => handleLike(product)}>
+                            <Icon name="favorite" style={styles.price} color="#c31e39"/>
                             <Text style={styles.texts}>{isLiked+ ''}</Text>
                         </TouchableOpacity>
                     </View>
@@ -85,7 +94,7 @@ function Single({route}) {
                             style={styles.count}/>
                         <TouchableOpacity onPress={() => handleProductCountChange('add')}><Text style={styles.count} >+</Text></TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.addToCart}><Text style={{color:"#c31e39", fontSize:20}}>Add to cart</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.addToCart}><Text style={{color:"#c31e39", fontSize:20}}>Add to cart</Text></TouchableOpacity>
                 </View>
             </View> :null}
         </>
@@ -124,7 +133,6 @@ const styles = StyleSheet.create({
         justifyContent:'space-between'
     },
     price: {
-        color: 'white',
         fontSize: 30
     },
     count: {
