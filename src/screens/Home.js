@@ -37,18 +37,6 @@ function Home({navigation}) {
                 renderItem={({item}) => <ProductNewItem api={API_URL} item={item}/>}
                 style={{flexGrow: 0}}
             />
-            <Text style={{fontSize: 30, marginBottom: 10}}>Categories product</Text>
-            <FlatList
-                data={category}
-                keyExtractor={(item) => item.id}
-                renderItem={({item}) => <ProductByCategory item={item}/>}
-                // refreshing={isLoadingNext}
-                // onRefresh={() => refetch({first: ITEM_CNT})}
-                // onEndReachedThreshold={0.1}
-                horizontal
-
-                // onEndReached={() => alert(3)}
-            />
         </View>
     );
 }
