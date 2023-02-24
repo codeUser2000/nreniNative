@@ -2,23 +2,24 @@ import React from 'react';
 import {Text, Image, View, StyleSheet, FlatList} from "react-native";
 import _ from 'lodash'
 import categories from "../categories";
+
 function Categories(props) {
 
     return (
-       <>
-           <Text style={styles.title}>Product categories</Text>
-           <FlatList
-               keyExtractor={() => _.uniqueId()}
-               data={categories}
-               renderItem={({item}) => (
-                   <>
-                       <View style={styles.category}>
-                           <Image source={item.img} style={styles.cImage}/>
-                           <Text style={styles.cTitle}>{item.title}</Text>
-                       </View>
-                   </>
-               )} />
-       </>
+        <View style={{flex: 1, backgroundColor: 'white', padding:15}}>
+            <Text style={styles.title}>Product categories</Text>
+            <FlatList
+                keyExtractor={() => _.uniqueId()}
+                data={categories}
+                renderItem={({item}) => (
+                    <>
+                        <View style={styles.category}>
+                            <Image source={item.img} style={styles.cImage}/>
+                            <Text style={styles.cTitle}>{item.title}</Text>
+                        </View>
+                    </>
+                )}/>
+        </View>
     );
 }
 

@@ -45,7 +45,7 @@ function AppNav(props) {
                             component={CartNavigation}
                             options={{
                                 tabBarLabel: ({focused, color}) => (
-                                    <Text style={{color: focused ? '#c31e39' : color}}>Cart</Text>),
+                                    <Text style={{color: focused ? '#c31e39' : color}}>Card</Text>),
                                 tabBarIcon: (p) => <Icon size={p.size} color={p.focused ? '#c31e39' : p.color}
                                                          name="shopping-cart"/>,
                             }}
