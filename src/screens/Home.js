@@ -27,7 +27,10 @@ function Home({navigation}) {
                 <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
                     <Icon name='dashboard' size={20} style={styles.topIcon}/>
                 </TouchableOpacity>
-                <Icon name='person' size={20} style={styles.topIcon}/>
+                <TouchableOpacity onPress={() => navigation.navigate('ProfileNavigation', { screen: 'Profile' })}>
+                    <Icon name='person' size={20} style={styles.topIcon}/>
+
+                </TouchableOpacity>
             </View>
             <View style={styles.banner}>
                 <Image resizeMode="cover" source={img} style={styles.bannerImg}/>
