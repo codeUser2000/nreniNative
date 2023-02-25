@@ -5,10 +5,12 @@ import ProductNewItem from '../components/ProductNewItem';
 import category from "../category";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import img from '../assets/images/banner.jpeg';
+import chainRing from '../assets/images/post/chainRing.jpg';
 import {API_URL} from "@env";
 import _ from 'lodash';
-import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ProductByCategory from "../components/ProductByCategory";
+import ring from '../assets/images/post/ring.jpg';
 
 function Home({navigation}) {
     const product = useSelector((state) => state.reducer.search.product);
@@ -20,7 +22,7 @@ function Home({navigation}) {
         console.log(API_URL);
     }, []);
     return (
-        <View style={{backgroundColor: 'white', flex: 1, padding: 20}}>
+        <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
             <View style={styles.top}>
                 <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
                     <Icon name='dashboard' size={20} style={styles.topIcon}/>
@@ -31,6 +33,8 @@ function Home({navigation}) {
                 <Image resizeMode="cover" source={img} style={styles.bannerImg}/>
                 <Text style={styles.welcome}>Welcome to SILVER NRENI page</Text>
             </View>
+
+
             <Text style={{fontSize: 30}}>New product</Text>
             <FlatList
                 keyExtractor={() => _.uniqueId()}
@@ -39,6 +43,7 @@ function Home({navigation}) {
                 renderItem={({item}) => <ProductNewItem api={API_URL} item={item}/>}
                 style={{flexGrow: 0}}
             />
+
         </View>
     );
 }
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#c31e39',
     },
     banner: {
-        padding: 10,
+        padding: 15,
         height: 200,
         marginRight: 15,
         marginBottom: 30,
