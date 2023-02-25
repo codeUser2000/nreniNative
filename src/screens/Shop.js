@@ -52,21 +52,6 @@ function Shop(props) {
                     </View>
                 </View>
             </View>
-            <View style={styles.block}>
-                <Image style={styles.img} source={chainRing} resizeMode='cover' borderRadius={25}/>
-                <View style={styles.textBlock}>
-                    <Text style={styles.title}>chain ring</Text>
-                    <Text style={styles.price}>
-                        $ 25.00
-                        {' '}
-                        <Text style={styles.oldPrice}>$ 30.00</Text>
-                    </Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="favorite" size={21} color={"#c31e39"}/>
-                        <Text style={styles.like}>5</Text>
-                    </View>
-                </View>
-            </View>
         </View>
     );
 }
