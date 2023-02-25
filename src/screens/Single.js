@@ -71,7 +71,7 @@ function Single({route, navigation}) {
                     <TouchableOpacity style={styles.undo} onPress={() => navigation.goBack()}>
                         <Icon style={styles.undo} name='reply' size={22}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.like}>
+                    <TouchableOpacity style={styles.like} onPress={() => handleLike(product)}>
                         <Icon style={styles.like} color={isLiked? "pink" : "#ffece5"} name="favorite" size={20}/>
                     </TouchableOpacity>
                 </View>
