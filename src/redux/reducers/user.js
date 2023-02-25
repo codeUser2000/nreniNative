@@ -39,7 +39,6 @@ export default function reducer(state = initialState, action) {
             };
         }
         case USER_PROFILE_SUCCESS: {
-            console.log(action.payload.data,67)
             return {
                 ...state,
                 userDataStatus: 'ok',

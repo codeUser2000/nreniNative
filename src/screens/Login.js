@@ -30,15 +30,13 @@ function Login({navigation}) {
             }
 
             const {data} = await Api.login(formData)
-            console.log(formData, data)
             if (data.status === 'ok') {
                 await AsyncStorage.setItem('token', data.token)
                 login(data.token)
             }
-            console.log(567890,4785)
 
         } catch (e) {
-            console.log(e,567890)
+            console.log(e)
             Toast.error(e.response.data.message)
         }
     }, [formData]);

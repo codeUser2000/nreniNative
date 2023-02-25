@@ -63,7 +63,6 @@ export function userUpdateRequest(formData) {
                 payload: {}
             })
             const { data } = await Api.addresses(formData)
-            console.log(data)
             Toast.success('User is updated')
             dispatch({
                 type: USER_UPDATE_SUCCESS,

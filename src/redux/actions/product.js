@@ -11,7 +11,6 @@ export function likeRequest(id) {
                 payload: {}
             })
             const { data } = await Api.likeProduct(id)
-            console.log(data, 23)
 
             dispatch({
                 type: PRODUCT_LIKE_SUCCESS,

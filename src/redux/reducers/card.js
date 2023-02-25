@@ -1,42 +1,33 @@
-import {ORDER_GET_FAIL, ORDER_GET_REQUEST, ORDER_GET_SUCCESS,} from '../actions/orders';
+import {GET_CARD_FAIL, GET_CARD_REQUEST, GET_CARD_SUCCESS,} from '../actions/card';
 
 const initialState = {
-    orderData: [],
-    orderStatus: ''
+    cardData: [],
+    cardStatus: ''
 }
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case ORDER_GET_REQUEST: {
+        case GET_CARD_REQUEST: {
             return {
                 ...state,
-                orderStatus: 'request',
+                cardStatus: 'request',
                 // users: {}
 
             }
         }
-        case ORDER_GET_SUCCESS: {
-            const { orders } = action.payload.data;
-            const allProduct = [];
-            orders.map((o) => {
-                o.products.map((p) => {
-                    p.deliveryStatus = o.deliveryStatus;
-                    return p;
-                });
-                allProduct.push(...o.products);
-                return true;
-            });
+        case GET_CARD_SUCCESS: {
+            const { cartItem } = action.payload.data;
             return {
                 ...state,
-                orderStatus: 'ok',
-                orderData: allProduct
+                cardStatus: 'ok',
+                cardData: cartItem
             }
         }
-        case  ORDER_GET_FAIL: {
+        case  GET_CARD_FAIL: {
             return {
                 ...state,
-                orderStatus: 'fail',
-                orderData: []
+                cardStatus: 'fail',
+                cardData: []
             }
         }
 

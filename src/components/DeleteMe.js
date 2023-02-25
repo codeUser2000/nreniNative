@@ -13,7 +13,6 @@ function DeleteMe({show, setShow, email}) {
 
     const handleUserDelete = useCallback(async () => {
         try {
-            console.log("yes")
             await Api.userSelfDelete(email)
             Toast.success('User is Deleted')
             await logout()

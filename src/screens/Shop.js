@@ -1,58 +1,49 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, Text, Image} from "react-native";
 import ring from '../assets/images/post/ring.jpg';
 import chainRing from '../assets/images/post/chainRing.jpg';
 import Icon from "react-native-vector-icons/MaterialIcons";
+import MasonryList from "@react-native-seoul/masonry-list";
+import {useDispatch, useSelector} from "react-redux";
+import {searchRequest} from "../redux/actions/search";
 
 function Shop(props) {
+    const product = useSelector((state) => state.reducer.search.product);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        (async () => {
+            await dispatch(searchRequest({page: 1}));
+        })();
+    }, []);
     return (
-        <View style={styles.shop}>
-            <View style={styles.block}>
-                <Image style={styles.img} source={ring} resizeMode='cover' borderRadius={25}/>
-                <View style={styles.textBlock}>
-                    <Text style={styles.title}>Ring</Text>
-                    <Text style={styles.price}>
-                        $ 25.00
-                        {' '}
-                        <Text style={styles.oldPrice}>$ 30.00</Text>
-                    </Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="favorite" size={21} color={"#c31e39"}/>
-                        <Text style={styles.like}>5</Text>
+        // <View style={styles.shop}>
+            <MasonryList
+                style={styles.shop}
+                data={product}
+                keyExtractor={(item) => item.id}
+                numColumns={2}
+                // showsVerticalScrollIndicator={false}
+                renderItem={({item}) => <View style={styles.block}>
+                    <Image style={styles.img} source={ring} resizeMode='cover' borderRadius={25}/>
+                    <View style={styles.textBlock}>
+                        <Text style={styles.title}>{item.title}</Text>
+                        <Text style={styles.price}>
+                            $ {item.newPrice}
+                            {' '}
+                            {item.oldPrice ?<Text style={styles.oldPrice}>${item.oldPrice}</Text>: null}
+                        </Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Icon name="favorite" size={21} color={"#c31e39"}/>
+                            <Text style={styles.like}>{item.like}</Text>
+                        </View>
                     </View>
-                </View>
-            </View>
-            <View style={styles.block}>
-                <Image style={styles.img} source={chainRing} resizeMode='cover' borderRadius={25}/>
-                <View style={styles.textBlock}>
-                    <Text style={styles.title}>chain ring</Text>
-                    <Text style={styles.price}>
-                        $ 25.00
-                        {' '}
-                        <Text style={styles.oldPrice}>$ 30.00</Text>
-                    </Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="favorite" size={21} color={"#c31e39"}/>
-                        <Text style={styles.like}>5</Text>
-                    </View>
-                </View>
-            </View>
-            <View style={styles.block}>
-                <Image style={styles.img} source={ring} resizeMode='cover' borderRadius={25}/>
-                <View style={styles.textBlock}>
-                    <Text style={styles.title}>Ring</Text>
-                    <Text style={styles.price}>
-                        $ 25.00
-                        {' '}
-                        <Text style={styles.oldPrice}>$ 30.00</Text>
-                    </Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="favorite" size={21} color={"#c31e39"}/>
-                        <Text style={styles.like}>5</Text>
-                    </View>
-                </View>
-            </View>
-        </View>
+                </View>}
+                // refreshing={isLoadingNext}
+                // onRefresh={() => refetch({first: ITEM_CNT})}
+                // onEndReachedThreshold={0.1}
+                // onEndReached={() => loadNext(ITEM_CNT)}
+            />
+        // </View>
     );
 }
 
@@ -67,7 +58,7 @@ const styles = StyleSheet.create({
     },
     block: {
         height: 220,
-        width: "47%",
+        width: "90%",
         borderRadius: 25,
         marginBottom: 150,
     },

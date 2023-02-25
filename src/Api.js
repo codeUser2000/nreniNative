@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let auth = null;
 
+
+
 (async () => {
     auth = await AsyncStorage.getItem('token')
 })()
@@ -13,11 +15,13 @@ const api = axios.create({
         'Content-type': 'application/json',
     },
 });
-console.log(API_URL)
 api.interceptors.request.use(
     // eslint-disable-next-line no-unused-vars
     (config) => config,
 );
+
+console.log(API_URL)
+
 
 class Api {
     static getData(data) {

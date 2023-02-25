@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import _ from 'lodash';
 import {API_URL} from "@env";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteLikeRequest, likeRequest, singleRequest} from "../redux/actions/product";
 import {addToCardRequest} from "../redux/actions/card";
-// import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 function Single({route}) {
     const [data, setData] = useState({});
@@ -67,14 +67,14 @@ function Single({route}) {
     return (
         <>
             {!_.isEmpty(data) ? <View style={styles.block}>
-                {/*<View style={styles.top}>*/}
-                {/*    <Icon style={styles.undo} name='reply' size={22}/>*/}
-                {/*    <Icon style={styles.like} name="favorite" size={20}/>*/}
-                {/*</View>*/}
+                <View style={styles.top}>
+                    <Icon style={styles.undo} name='reply' size={22}/>
+                    <Icon style={styles.like} name="favorite" size={20}/>
+                </View>
                 <Image
                     style={styles.avatar}
                     source={{uri: `${API_URL}${data.avatar}`}}/>
-                <View style={styles.textBlock}>
+                <ScrollView style={styles.textBlock}>
                     <View style={styles.info}>
                         <View style={styles.name}>
                             <Text style={styles.title}>{data.title}</Text>
@@ -92,7 +92,6 @@ function Single({route}) {
                         </View>
                     </View>
                     <Text style={styles.desc}>{data.description}</Text>
-
                     <View style={styles.quantity}>
                         <TouchableOpacity onPress={() => handleProductCountChange('delete')}>
                             <Text style={styles.count}>-</Text>
@@ -106,12 +105,10 @@ function Single({route}) {
                             <Text style={styles.count}>+</Text>
                         </TouchableOpacity>
                     </View>
-
                     <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.btn}>
                         <Text style={styles.addToCard}>Add to card</Text>
                     </TouchableOpacity>
-
-                </View>
+                </ScrollView>
             </View> : null}
         </>
     );
@@ -135,6 +132,10 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         textAlign: 'center',
         backgroundColor: '#c31e39',
+        position: 'absolute',
+        zIndex: 1000000,
+        right: 0,
+
     },
     undo: {
         width: 30,
@@ -144,6 +145,9 @@ const styles = StyleSheet.create({
         color: "#ffece5",
         textAlign: 'center',
         backgroundColor: '#c31e39',
+        position: 'absolute',
+        zIndex: 1000000,
+        left: 0,
     },
     avatar: {
         height: '60%',
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
     info: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom:20,
+        marginBottom: 20,
         justifyContent: 'space-between',
     },
     title: {

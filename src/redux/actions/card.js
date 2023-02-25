@@ -25,3 +25,29 @@ export function addToCardRequest(product) {
     }
 }
 
+export const GET_CARD_REQUEST = 'GET_CARD_REQUEST';
+export const GET_CARD_SUCCESS = 'GET_CARD_SUCCESS';
+export const GET_CARD_FAIL = 'GET_CARD_FAIL';
+
+export function getCardRequest(page) {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: GET_CARD_REQUEST,
+                payload: {}
+            })
+            const { data } = await Api.getCard(page)
+            dispatch({
+                type: GET_CARD_SUCCESS,
+                payload: { data }
+            })
+        } catch (e) {
+            console.log(e)
+            dispatch({
+                type: GET_CARD_FAIL,
+                payload: {}
+            })
+        }
+    }
+}
+
