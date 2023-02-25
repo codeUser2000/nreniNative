@@ -91,9 +91,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderColor: '#4a4a4a',
     },
-    quantity: {
-        fontSize: 22,
-    }
 });
 
 

@@ -38,13 +38,16 @@ function Profile({navigation}) {
     return (
         <>
             {_.isEmpty(profile) ? <Text>loading...</Text> : null}
-            <View style={{flex: 1, backgroundColor: 'white', padding: 20}}>
+            <View style={styles.profile}>
                 <View style={styles.top}>
                     <Text style={styles.topTitle}>My account</Text>
                     <Text style={styles.hello}>
                         Hello
                         {' '}
-                        <Text style={styles.name}>{profile.firstName} {profile.lastName}</Text>
+                        <Text style={styles.name}>
+                            John Done
+                            {/*{profile.firstName} {profile.lastName}*/}
+                        </Text>
                     </Text>
                 </View>
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
@@ -55,7 +58,7 @@ function Profile({navigation}) {
                             color='#c31e39'
                             style={{paddingHorizontal: 10}}
                             size={30} name="group"/>
-                        <Text>About me</Text>
+                        <Text style={styles.titles}>About me</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Order')}
@@ -65,7 +68,7 @@ function Profile({navigation}) {
                             style={{paddingHorizontal: 10}}
                             size={30}
                             name="list-alt"/>
-                        <Text>Orders</Text>
+                        <Text style={styles.titles}>my orders</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => setShowDelete(true)}
@@ -75,7 +78,7 @@ function Profile({navigation}) {
                             style={{paddingHorizontal: 10}}
                             size={30}
                             name="person-remove"/>
-                        <Text>Delete</Text>
+                        <Text style={styles.titles}>delete account</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={handleLogout}
@@ -85,7 +88,7 @@ function Profile({navigation}) {
                             style={{paddingHorizontal: 10}}
                             size={30}
                             name="power-settings-new"/>
-                        <Text>Logout</Text>
+                        <Text style={styles.titles}>Logout</Text>
                     </TouchableOpacity>
                 </View>
                 <AboutMe show={show} setShow={setShow} data={profile}/>
@@ -96,6 +99,13 @@ function Profile({navigation}) {
 }
 
 const styles = StyleSheet.create({
+    profile: {
+        flex: 1,
+        padding: 20,
+        paddingTop: 150,
+        paddingBottom: 150,
+        backgroundColor: 'white',
+    },
     top: {
         textAlign: 'center',
     },
@@ -123,8 +133,12 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         flexDirection: 'row',
         alignItems: 'center'
-        // borderBottomColor: "red",
     },
+    titles: {
+        fontSize: 18,
+        fontWeight: '400',
+        textTransform: 'capitalize',
+    }
 });
 
 export default Profile;
