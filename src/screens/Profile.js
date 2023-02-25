@@ -45,8 +45,7 @@ function Profile({navigation}) {
                         Hello
                         {' '}
                         <Text style={styles.name}>
-                            John Done
-                            {/*{profile.firstName} {profile.lastName}*/}
+                            {profile.firstName} {profile.lastName}
                         </Text>
                     </Text>
                 </View>

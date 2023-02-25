@@ -7,7 +7,7 @@ function StartProfile({navigation}) {
         <ImageBackground source={img} resizeMode="cover" style={styles.start}>
             <View style={styles.layout}>
                 <Text style={styles.title}>nreni</Text>
-                <Text style={styles.info}>Sign up now and shop the most modern jewelry</Text>
+                <Text style={styles.info}>Sign up now and shop the latest and trendiest jewelry</Text>
                 <View style={styles.startNBtm}>
                     <TouchableOpacity
                         style={styles.button}

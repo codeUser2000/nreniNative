@@ -24,7 +24,7 @@ function Cart(props) {
                             <TouchableOpacity>
                                 <Text style={styles.count}>─</Text>
                             </TouchableOpacity>
-                            <TextInput value='1'/>
+                            <TextInput value='1' style={styles.quantity}/>
                             <TouchableOpacity>
                                 <Text style={styles.count}>+</Text>
                             </TouchableOpacity>
@@ -91,6 +91,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderColor: '#4a4a4a',
     },
+    quantity: {
+        fontSize: 20,
+        textAlign: 'center',
+    }
 });
 
 
