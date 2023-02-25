@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, StyleSheet, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import ring from '../assets/images/post/ring.jpg';
 import Icon from "react-native-vector-icons/MaterialIcons";
+import Api from "../Api";
 
 function Cart(props) {
+    useEffect(() => {
+        (async () => {
+           const {data} = await Api.getCard(1)
+            console.log(data)
+        })()
+    }, [])
+
     return (
         <View style={{flex: 1, backgroundColor: 'white', padding: 15}}>
             <View style={styles.cardItem}>

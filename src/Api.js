@@ -10,11 +10,10 @@ let auth = null;
 const api = axios.create({
     baseURL: API_URL,
     headers: {
-        Authorization: auth,
         'Content-type': 'application/json',
     },
 });
-
+console.log(API_URL)
 api.interceptors.request.use(
     // eslint-disable-next-line no-unused-vars
     (config) => config,
@@ -36,6 +35,15 @@ class Api {
     static async userSelfDelete(email) {
         auth = await AsyncStorage.getItem('token')
         return api.post('/users/deleteSelf', {email}, {
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
+    static async getCard(page) {
+        auth = await AsyncStorage.getItem('token')
+        return api.get(`/cart/cartItemList?page=${page || 1}`,{
             headers: {
                 Authorization: auth
             },

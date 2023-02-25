@@ -22,17 +22,23 @@ function Login({navigation}) {
     }, [formData]);
     const {login} = useContext(AuthContext)
     const handleSubmit = useCallback(async () => {
+
         try {
             if (!formData.email || !formData.password) {
                 Toast.error('Enter email and password', 'top');
                 return;
             }
+
             const {data} = await Api.login(formData)
+            console.log(formData, data)
             if (data.status === 'ok') {
                 await AsyncStorage.setItem('token', data.token)
                 login(data.token)
             }
+            console.log(567890,4785)
+
         } catch (e) {
+            console.log(e,567890)
             Toast.error(e.response.data.message)
         }
     }, [formData]);
