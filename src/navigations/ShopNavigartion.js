@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 function ShopNavigation() {
     return (
         <Stack.Navigator initialRouteName="Shop">
-            <Stack.Screen name="Card" component={Shop} />
+            <Stack.Screen name="Shop" component={Shop} />
         </Stack.Navigator>
     );
 }

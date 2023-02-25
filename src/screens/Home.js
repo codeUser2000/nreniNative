@@ -19,7 +19,7 @@ function Home({navigation}) {
         (async () => {
             await dispatch(searchRequest({page: 1}));
         })();
-        console.log(API_URL);
+        console.log(API_URL,456789);
     }, []);
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
