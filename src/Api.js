@@ -88,6 +88,16 @@ class Api {
         return api.post('/users/register', data);
     }
 
+    static async deleteFromCart(data) {
+        const auth = await AsyncStorage.getItem('token')
+        console.log(auth, 'cart')
+        return api.post('/cart/deleteFromCart', data, {
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
     static async addresses(data) {
         const auth = await AsyncStorage.getItem('token')
         return api.post('/users/addresses', data, {

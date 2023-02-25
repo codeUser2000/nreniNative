@@ -4,13 +4,14 @@ import ring from '../assets/images/post/ring.jpg';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Api from "../Api";
 import {useDispatch, useSelector} from "react-redux";
-import {getCardRequest} from "../redux/actions/card";
+import {getCardRequest, deleteFromCardRequest} from "../redux/actions/card";
 import {API_URL} from "@env";
 
 
 function Cart({navigation}) {
     const dispatch = useDispatch()
     const product = useSelector((state) => state.reducer.card.cardData);
+    const user = useSelector((state) => state.reducer.user.userData);
     const [productData, setProductData] = useState([])
     const [editData, setEditData] = useState([])
     useEffect(() => {
@@ -25,7 +26,7 @@ function Cart({navigation}) {
     }, [product])
     useEffect(() => {
         navigation.addListener('focus', async () => {
-            await dispatch(getCardRequest(1))
+            await dispatch(getCardRequest(1));
         })
     },[])
     const handleCountChange = useCallback((operation, id) => {
@@ -39,7 +40,14 @@ function Cart({navigation}) {
             })
             setProductData(editData)
         }
-    }, [editData])
+    }, [editData]);
+
+    const handleDelete = useCallback(async (id) => {
+        console.log(id, user)
+            await dispatch(deleteFromCardRequest(id));
+            await dispatch(getCardRequest(1));
+    }, []);
+
 
     return (
         <View style={{flex: 1, backgroundColor: 'white', padding: 15}}>
@@ -55,9 +63,11 @@ function Cart({navigation}) {
                             <Text style={styles.price}>{item.price}</Text>
                         </View>
                         <View style={styles.action}>
-                            <Text style={styles.delete}>
-                                <Icon name="delete" size={25}/>
-                            </Text>
+                            <TouchableOpacity onPress={() => handleDelete(item.id)}>
+                                <Text style={styles.delete}>
+                                    <Icon name="delete" size={25}/>
+                                </Text>
+                            </TouchableOpacity>
                             <View style={styles.countBtn}>
                                 <TouchableOpacity>
                                     <Text style={styles.count}>─</Text>

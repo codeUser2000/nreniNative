@@ -7,7 +7,7 @@ import {deleteLikeRequest, likeRequest, singleRequest} from "../redux/actions/pr
 import {addToCardRequest} from "../redux/actions/card";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-function Single({route}) {
+function Single({route, navigation}) {
     const [data, setData] = useState({});
     const [count, setCount] = useState(1);
     const [isLiked, setIsLiked] = useState(1);
@@ -68,8 +68,12 @@ function Single({route}) {
         <>
             {!_.isEmpty(data) ? <View style={styles.block}>
                 <View style={styles.top}>
-                    <Icon style={styles.undo} name='reply' size={22}/>
-                    <Icon style={styles.like} name="favorite" size={20}/>
+                    <TouchableOpacity style={styles.undo} onPress={() => navigation.goBack()}>
+                        <Icon style={styles.undo} name='reply' size={22}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.like}>
+                        <Icon style={styles.like} color={isLiked? "pink" : "#ffece5"} name="favorite" size={20}/>
+                    </TouchableOpacity>
                 </View>
                 <Image
                     style={styles.avatar}
@@ -128,7 +132,6 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         lineHeight: 30,
-        color: "#ffece5",
         borderRadius: 25,
         textAlign: 'center',
         backgroundColor: '#c31e39',
