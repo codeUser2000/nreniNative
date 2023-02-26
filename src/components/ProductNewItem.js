@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         height: 300,
-        width:200
+        width:170
     },
     stretch: {
         resizeMode: 'cover',

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchRequest} from '../redux/actions/search';
 import ProductNewItem from '../components/ProductNewItem';
@@ -11,16 +11,33 @@ import _ from 'lodash';
 import {FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ProductByCategory from "../components/ProductByCategory";
 import ring from '../assets/images/post/ring.jpg';
+import Api from "../Api";
+import Loader from "../components/Loader";
 
 function Home({navigation}) {
-    const product = useSelector((state) => state.reducer.search.product);
-    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false)
+    const [product, setProduct] = useState([])
+    const [page, setPage] = useState(1)
+    const loadMore = useCallback(async () => {
+        console.log(56789)
+        setPage(+page + 1)
+    }, [])
+    const getData = useCallback(() => {
+        setIsLoading(true)
+        Api.getData({page}).then(({data}) => {
+            setProduct([...product,...data.products])
+            setIsLoading(false)
+        }).catch((e) => console.log(e))
+    }, [page])
+
     useEffect(() => {
-        (async () => {
-            await dispatch(searchRequest({page: 1}));
-        })();
-        console.log(API_URL,456789);
-    }, []);
+        navigation.addListener('focus', () => {
+            getData();
+        })
+    },[])
+    useEffect(() => {
+        getData()
+    }, [page]);
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
             <View style={styles.top}>
@@ -40,11 +57,14 @@ function Home({navigation}) {
 
             <Text style={{fontSize: 30}}>New product</Text>
             <FlatList
+                numColumns={2}
                 keyExtractor={() => _.uniqueId()}
                 data={product}
-                horizontal
                 renderItem={({item}) => <ProductNewItem api={API_URL} item={item}/>}
                 style={{flexGrow: 0}}
+                onEndReachedThreshold={0}
+                onEndReached={loadMore}
+                ListFooterComponent={() => <Loader state={isLoading} />}
             />
 
         </View>

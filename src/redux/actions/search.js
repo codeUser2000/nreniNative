@@ -14,7 +14,10 @@ export function searchRequest(search) {
                 type: SEARCH_REQUEST,
                 payload: {}
             })
+            console.log(449999)
+
             const { data } = await Api.getData(search)
+            console.log(data,9999)
             dispatch({
                 type: SEARCH_SUCCESS,
                 payload: { data }

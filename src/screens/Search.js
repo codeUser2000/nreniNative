@@ -3,35 +3,45 @@ import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import _ from 'lodash';
 import MasonryList from '@react-native-seoul/masonry-list';
-import {useDispatch, useSelector} from 'react-redux';
-import {categoryRequest, searchRequest} from '../redux/actions/search';
+import {useSelector} from 'react-redux';
 import CategoryItem from '../components/CategoryItem';
 import ProductNewItem from '../components/ProductNewItem';
 import NoData from "../components/NoData";
+import Loader from "../components/Loader";
+import Api from "../Api";
 
-function Search({route}) {
-    const dispatch = useDispatch();
+function Search({route, navigation}) {
     const [search, setSearch] = useState('')
-    const product = useSelector((state) => state.reducer.search.product);
     const category = useSelector(state => state.reducer.search.category);
-    useEffect(() => {
-        (async () => {
-            await dispatch(categoryRequest());
-            await dispatch(searchRequest({page: 1}));
-        })();
-    }, []);
+    const [isLoading, setIsLoading] = useState(false)
+    const [product, setProduct] = useState([])
+    const [page, setPage] = useState(1)
+    const loadMore = useCallback(async () => {
+        setPage(+page + 1)
+    }, [])
+    const getData = useCallback(() => {
+        setIsLoading(true)
+        Api.getData({page, search, filter: route.params || ''}).then(({data}) => {
+            setProduct([...product,...data.products])
+            setIsLoading(false)
+        }).catch((e) => console.log(e))
+    }, [page, search])
 
-    const handleSearch = useCallback(async (ev) => {
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+            getData();
+        })
+    },[])
+    useEffect(() => {
+        getData()
+    }, [page, search]);
+
+    const handleSearch = useCallback( (ev) => {
         setSearch(ev)
-        await dispatch(searchRequest({page: 1, search:ev}));
     }, []);
 
     useEffect(() => {
-        (async () => {
-            setSearch(route.params)
-            console.log(route.params)
-            await dispatch(searchRequest({page:1, filter: route.params}))
-        })()
+        setSearch(route.params)
     }, [route.params])
     return (
         <View style={{flex: 1}}>
@@ -54,15 +64,14 @@ function Search({route}) {
             </View>
             <View style={{flex: 1}}>
                 {!_.isEmpty(product)?
-                    <MasonryList
+                    <FlatList
                     data={product}
                     keyExtractor={(item) => item.id}
                     numColumns={2}
                     renderItem={({item}) => <ProductNewItem item={item}/>}
-                    // refreshing={isLoadingNext}
-                    // onRefresh={() => refetch({first: ITEM_CNT})}
-                    // onEndReachedThreshold={0.1}
-                    onEndReached={() => alert(3)}
+                    onEndReachedThreshold={0}
+                    onEndReached={loadMore}
+                    ListFooterComponent={() => <Loader state={isLoading} />}
                 />:
                     <NoData />}
 

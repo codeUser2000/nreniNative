@@ -25,6 +25,7 @@ export default function reducer(state = initialState, action) {
             }
         }
         case SEARCH_SUCCESS: {
+
             return {
                 ...state,
                 productStatus: 'ok',
