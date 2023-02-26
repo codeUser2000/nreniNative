@@ -7,7 +7,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {categoryRequest, searchRequest} from '../redux/actions/search';
 import CategoryItem from '../components/CategoryItem';
 import ProductNewItem from '../components/ProductNewItem';
-import {API_URL} from '@env';
 import NoData from "../components/NoData";
 
 function Search({route}) {
@@ -30,6 +29,7 @@ function Search({route}) {
     useEffect(() => {
         (async () => {
             setSearch(route.params)
+            console.log(route.params)
             await dispatch(searchRequest({page:1, filter: route.params}))
         })()
     }, [route.params])
@@ -58,7 +58,7 @@ function Search({route}) {
                     data={product}
                     keyExtractor={(item) => item.id}
                     numColumns={2}
-                    renderItem={({item}) => <ProductNewItem api={API_URL} item={item}/>}
+                    renderItem={({item}) => <ProductNewItem item={item}/>}
                     // refreshing={isLoadingNext}
                     // onRefresh={() => refetch({first: ITEM_CNT})}
                     // onEndReachedThreshold={0.1}

@@ -1,10 +1,9 @@
 import React from 'react';
-import {Text, Image, View, StyleSheet, FlatList} from "react-native";
+import {Text, Image, View, StyleSheet, FlatList, TouchableOpacity} from "react-native";
 import _ from 'lodash'
 import categories from "../categories";
 
-function Categories(props) {
-
+function Categories({navigation}) {
     return (
         <View style={{flex: 1, backgroundColor: 'white', padding:15}}>
             <Text style={styles.title}>Product categories</Text>
@@ -13,10 +12,12 @@ function Categories(props) {
                 data={categories}
                 renderItem={({item}) => (
                     <>
-                        <View style={styles.category}>
-                            <Image source={item.img} style={styles.cImage}/>
-                            <Text style={styles.cTitle}>{item.title}</Text>
-                        </View>
+                       <TouchableOpacity onPress={() => navigation.navigate('SearchNavigation', { screen: 'Search', params: item.title})}>
+                           <View style={styles.category}>
+                               <Image source={item.img} style={styles.cImage}/>
+                               <Text style={styles.cTitle}>{item.title}</Text>
+                           </View>
+                       </TouchableOpacity>
                     </>
                 )}/>
         </View>

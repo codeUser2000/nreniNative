@@ -2,6 +2,8 @@ import React, {useCallback} from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from "react-native-vector-icons/MaterialIcons";
+import {API_URL} from "@env";
+
 
 function ProductNewItem({item, api}) {
     const navigation = useNavigation();
@@ -9,7 +11,7 @@ function ProductNewItem({item, api}) {
         navigation.navigate('Single', data.id)
     }, []);
     return (
-            <ImageBackground source={{uri: api + item.avatar}} resizeMode="cover" style={styles.block} imageStyle={{borderRadius: 10}} >
+            <ImageBackground source={{uri: API_URL + item.avatar}} resizeMode="cover" style={styles.block} imageStyle={{borderRadius: 10}} >
                 <TouchableOpacity onPress={() => handleSingle(item)}>
                         <View style={styles.textBlock}>
                             <View>
