@@ -66,7 +66,8 @@ function Single({route, navigation}) {
     }, [product])
     return (
         <>
-            {!_.isEmpty(data) ? <View style={styles.block}>
+            {!_.isEmpty(data) ?
+                <View style={styles.block}>
                     <View style={styles.top}>
                         <TouchableOpacity style={styles.undo} onPress={() => navigation.goBack()}>
                             <Icon style={styles.undo} name='reply' size={22}/>
@@ -111,17 +112,16 @@ function Single({route, navigation}) {
                                 </TouchableOpacity>
                             </View>
                         </View>
-
                         <View style={styles.singleBottom}>
-                            <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.btn}>
-                                <Text style={styles.addToCard}>Add to card</Text>
+                            <TouchableOpacity style={styles.btn}>
+                                <Text style={styles.buy}>Buy Now</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.buyBtn}>
-                                <Text style={styles.addToCard}>Buy Now</Text>
+                            <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.addToCard}>
+                                <Icon name='shopping-cart' style={styles.cardIcon} size={23}/>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
-            </View> : null}
+                </View> : null}
         </>
     );
 }
@@ -165,7 +165,6 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     textBlock: {
-        height: '45%',
         padding: 20,
         marginTop: -20,
         borderRadius: 25,
@@ -205,11 +204,12 @@ const styles = StyleSheet.create({
     },
     desc: {
         fontSize: 18,
+        marginTop: 10,
         fontWeight: '400',
-        marginTop: 15,
     },
     quantity: {
         flex: 1,
+        marginTop: 20,
         alignItems: "center",
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -224,25 +224,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     btn: {
-        padding: 10,
+        height: 50,
         width: '70%',
         borderWidth: 2,
         borderRadius: 25,
+        alignItems: 'center',
         borderColor: '#c31e39',
+        justifyContent: 'center',
         backgroundColor: '#c31e39',
     },
-    buyBtn: {
-        padding: 10,
-        width: '20%',
-        borderWidth: 2,
-        borderRadius: 25,
-        borderColor: '#c31e39',
-        backgroundColor: '#c31e39',
-    },
-    addToCard: {
+    buy: {
         fontSize: 20,
         color: "#ffece5",
         textAlign: 'center',
     },
+    addToCard: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "#c31e39",
+    },
+    cardIcon: {
+        color: '#ffece5',
+    }
 })
 export default Single;
