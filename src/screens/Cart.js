@@ -34,9 +34,6 @@ function Cart({navigation}) {
     useEffect(() => {
         getCartData()
     }, [])
-    useEffect(() => {
-        setProductData(product)
-    }, [product])
 
     const loadMore = useCallback(() => {
         if (+page < +pagination) {
@@ -56,17 +53,17 @@ function Cart({navigation}) {
                 count: product.quantity + 1,
                 price: product.product.newPrice,
             }));
-            getCartData();
+            await dispatch(getCardRequest(page));
+
         } else if (product.quantity > 1 && operator === '-') {
             await dispatch(updateCartRequest({
                 productId: product.product.id,
                 count: product.quantity - 1,
                 price: product.product.newPrice,
             }));
-            setPage(page);
-            getCartData()
+            await dispatch(getCardRequest(page));
         }
-    }, []);
+    }, [page]);
 
     const handleDelete = useCallback(async (id) => {
         await dispatch(deleteFromCardRequest(id));
@@ -80,8 +77,7 @@ function Cart({navigation}) {
                 data={productData}
                 keyExtractor={() => _.uniqueId()}
                 ListFooterComponent={() => <Loader state={isLoading}/>}
-                renderItem={({item}) => <CardComponent handleCountChange={handleCountChange} handleDelete={handleDelete}
-                                                       item={item}/>}
+                renderItem={({item}) => <CardComponent handleCountChange={handleCountChange} handleDelete={handleDelete} item={item}/>}
                 onEndReachedThreshold={0}
                 onEndReached={() => loadMore()}
             />

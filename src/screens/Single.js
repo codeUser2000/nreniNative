@@ -77,7 +77,7 @@ function Single({route, navigation, setLikeLocal}) {
                             {isLiked ?
                                 <Icon name='favorite' color='#c31e39' size={25}/>
                                 :
-                                <Icon name='heart-broken' color='#4a4a4a' size={25}/>
+                                <Icon name='heart_broken' color='#4a4a4a' size={25}/>
                             }
                         </TouchableOpacity>
                     </View>
