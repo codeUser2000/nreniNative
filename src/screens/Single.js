@@ -77,7 +77,7 @@ function Single({route, navigation, setLikeLocal}) {
                             {isLiked ?
                                 <Icon name='favorite' color='#c31e39' size={25}/>
                                 :
-                                <Icon name='heart-broken' color='#4a4a4a' size={25}/>
+                                <Icon name='favorite' color='#4a4a4a' size={25}/>
                             }
                         </TouchableOpacity>
                     </View>
@@ -85,46 +85,46 @@ function Single({route, navigation, setLikeLocal}) {
                         style={styles.avatar}
                         source={{uri: `${API_URL}${data.avatar}`}}/>
                     <ScrollView style={styles.textBlock}>
-                           <View>
-                               <View style={styles.info}>
-                                   <View style={styles.name}>
-                                       <Text style={styles.title}>{data.title}</Text>
-                                       <Text style={styles.category}>{data.categories?.type}</Text>
-                                   </View>
-                                   <View style={styles.price}>
-                                       <Text style={styles.newPrice}>$
-                                           {' '}
-                                           {data.newPrice}
-                                       </Text>
-                                       <Text style={styles.oldPrice}>
-                                           ${' '}
-                                           {data.oldPrice}
-                                       </Text>
-                                   </View>
-                               </View>
-                               <Text style={styles.desc}>{data.description}</Text>
-                               <View style={styles.quantity}>
-                                   <TouchableOpacity onPress={() => handleProductCountChange('delete')}>
-                                       <Text style={styles.count}>-</Text>
-                                   </TouchableOpacity>
-                                   <TextInput
-                                       keyboardType='numeric'
-                                       value={count + ''}
-                                       onChangeText={(ev) => handleChange(ev)}
-                                       style={styles.count}/>
-                                   <TouchableOpacity onPress={() => handleProductCountChange('add')}>
-                                       <Text style={styles.count}>+</Text>
-                                   </TouchableOpacity>
-                               </View>
-                           </View>
-                           <View style={styles.singleBottom}>
-                               <TouchableOpacity style={styles.btn}>
-                                   <Text style={styles.buy}>Buy Now</Text>
-                               </TouchableOpacity>
-                               <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.addToCard}>
-                                   <Icon name='shopping-cart' style={styles.cardIcon} size={23}/>
-                               </TouchableOpacity>
-                           </View>
+                        <View>
+                            <View style={styles.info}>
+                                <View style={styles.name}>
+                                    <Text style={styles.title}>{data.title}</Text>
+                                    <Text style={styles.category}>{data.categories?.type}</Text>
+                                </View>
+                                <View style={styles.price}>
+                                    <Text style={styles.newPrice}>$
+                                        {' '}
+                                        {data.newPrice}
+                                    </Text>
+                                    <Text style={styles.oldPrice}>
+                                        ${' '}
+                                        {data.oldPrice}
+                                    </Text>
+                                </View>
+                            </View>
+                            <Text style={styles.desc}>{data.description}</Text>
+                            <View style={styles.quantity}>
+                                <TouchableOpacity onPress={() => handleProductCountChange('delete')}>
+                                    <Text style={styles.count}>-</Text>
+                                </TouchableOpacity>
+                                <TextInput
+                                    keyboardType='numeric'
+                                    value={count + ''}
+                                    onChangeText={(ev) => handleChange(ev)}
+                                    style={styles.count}/>
+                                <TouchableOpacity onPress={() => handleProductCountChange('add')}>
+                                    <Text style={styles.count}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={styles.singleBottom}>
+                            <TouchableOpacity style={styles.btn}>
+                                <Text style={styles.buy}>Buy Now</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.addToCard}>
+                                <Icon name='shopping-cart' style={styles.cardIcon} size={23}/>
+                            </TouchableOpacity>
+                        </View>
                     </ScrollView>
                 </View> : null}
         </>
@@ -224,6 +224,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: '70%',
         borderWidth: 2,
+        marginRight: 15,
         borderRadius: 25,
         alignItems: 'center',
         borderColor: '#c31e39',
