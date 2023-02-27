@@ -15,12 +15,12 @@ function Home({navigation}) {
 
     const setLikeLocal = useCallback((id, bool) => {
         product.map((p) => {
-            if(+p.id === +id){
-               if (bool){
-                   p.like += 1
-               }else {
-                   p.isLiked -= 1
-               }
+            if (+p.id === +id) {
+                if (bool) {
+                    p.like += 1
+                } else {
+                    p.isLiked -= 1
+                }
             }
             return p;
         })
@@ -37,10 +37,10 @@ function Home({navigation}) {
     }, [page])
 
     const loadMore = useCallback(async () => {
-        if (+page < +pagination){
+        if (+page < +pagination) {
             setPage(+page + 1)
         }
-    }, [page,pagination])
+    }, [page, pagination])
 
     useEffect(() => {
         getData()
@@ -51,11 +51,12 @@ function Home({navigation}) {
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
             <View style={styles.top}>
-                <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
-                    <Icon name='dashboard' size={20} style={styles.topIcon}/>
+                <TouchableOpacity style={styles.topIcon} onPress={() => navigation.navigate('Categories')}>
+                    <Icon name='grid-view' size={23} style={styles.icon}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('ProfileNavigation', { screen: 'Profile' })}>
-                    <Icon name='person' size={20} style={styles.topIcon}/>
+                <TouchableOpacity style={styles.topIcon}
+                                  onPress={() => navigation.navigate('ProfileNavigation', {screen: 'Profile'})}>
+                    <Icon name='person' size={25} style={styles.icon}/>
                 </TouchableOpacity>
             </View>
 
@@ -72,7 +73,7 @@ function Home({navigation}) {
                 renderItem={({item}) => <ShopComponent setLikeLocal={setLikeLocal} item={item}/>}
                 onEndReachedThreshold={0}
                 onEndReached={() => loadMore()}
-                ListFooterComponent={() => <Loader state={isLoading} />}
+                ListFooterComponent={() => <Loader state={isLoading}/>}
             />
 
 
@@ -87,13 +88,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     topIcon: {
-        width: 30,
-        height: 30,
-        lineHeight: 30,
-        borderRadius: 30,
-        color: '#ffece5',
-        textAlign: 'center',
+        width: 35,
+        height: 35,
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#c31e39',
+    },
+    icon: {
+        color: '#ffece5',
     },
     banner: {
         padding: 15,
