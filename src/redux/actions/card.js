@@ -27,7 +27,6 @@ export function addToCardRequest(product) {
         }
     }
 }
-
 export const GET_CARD_REQUEST = 'GET_CARD_REQUEST';
 export const GET_CARD_SUCCESS = 'GET_CARD_SUCCESS';
 export const GET_CARD_FAIL = 'GET_CARD_FAIL';
@@ -48,6 +47,31 @@ export function getCardRequest(page) {
             console.log(e)
             dispatch({
                 type: GET_CARD_FAIL,
+                payload: {}
+            })
+        }
+    }
+}
+export const UPDATE_CART_REQUEST = 'UPDATE_CART_REQUEST';
+export const UPDATE_CART_SUCCESS = 'UPDATE_CART_SUCCESS';
+export const UPDATE_CART_FAIL = 'UPDATE_CART_FAIL';
+
+export function updateCartRequest(data) {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: UPDATE_CART_REQUEST,
+                payload: {}
+            })
+            await Api.updateCart(data)
+            dispatch({
+                type: UPDATE_CART_SUCCESS,
+                payload: {}
+            })
+        } catch (e) {
+            console.log(e)
+            dispatch({
+                type: UPDATE_CART_FAIL,
                 payload: {}
             })
         }

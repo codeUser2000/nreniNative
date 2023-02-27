@@ -7,7 +7,7 @@ import {deleteLikeRequest, likeRequest, singleRequest} from "../redux/actions/pr
 import {addToCardRequest} from "../redux/actions/card";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-function Single({route, navigation}) {
+function Single({route, navigation, setLikeLocal}) {
     const [data, setData] = useState({});
     const [count, setCount] = useState(1);
     const [isLiked, setIsLiked] = useState(1);
@@ -32,9 +32,13 @@ function Single({route, navigation}) {
         if (isLiked) {
             setIsLiked(false)
             await dispatch(deleteLikeRequest(product.product.id))
+            // setLikeLocal(product.product.id, false)
+
         } else {
             setIsLiked(true)
             await dispatch(likeRequest(product.product.id))
+            // setLikeLocal(product.product.id, true)
+
         }
     }, [isLiked])
 

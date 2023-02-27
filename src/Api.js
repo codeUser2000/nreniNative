@@ -24,6 +24,7 @@ console.log(API_URL)
 
 
 class Api {
+    //-------PRODUCT--------//
     static getData(data) {
         console.log(data)
         return api.get(`/products/products?page=${data.page}${data.filter ? `&filter=${data.filter}` : ''}${data.search ? `&searchText=${data.search}` : ''}`, {
@@ -37,31 +38,21 @@ class Api {
         return api.get('/categories/category');
     }
 
+    static async getSingle(id) {
+        const auth = await AsyncStorage.getItem('token')
+        return api.get(`/products/singleProduct?id=${id}`, {
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
+
+    //-----USERS------//
+
     static async userSelfDelete(email) {
         auth = await AsyncStorage.getItem('token')
         return api.post('/users/deleteSelf', {email}, {
-            headers: {
-                Authorization: auth
-            },
-        });
-    }
-
-    static async getCard(page) {
-        auth = await AsyncStorage.getItem('token')
-        return api.get(`/cart/cartItemList?page=${page || 1}`,{
-            headers: {
-                Authorization: auth
-            },
-        });
-    }
-
-    static async addToCart(data) {
-        const auth = await AsyncStorage.getItem('token')
-        return api.post('/cart/addToCart', {
-            productId: data.product.id,
-            quantity: data.quantity,
-            price: data.price,
-        }, {
             headers: {
                 Authorization: auth
             },
@@ -89,15 +80,6 @@ class Api {
         return api.post('/users/register', data);
     }
 
-    static async deleteFromCart(data) {
-        const auth = await AsyncStorage.getItem('token')
-        console.log(auth, 'cart')
-        return api.post('/cart/deleteFromCart', data, {
-            headers: {
-                Authorization: auth
-            },
-        });
-    }
 
     static async addresses(data) {
         const auth = await AsyncStorage.getItem('token')
@@ -131,6 +113,8 @@ class Api {
         });
     }
 
+    //------LIKE------//
+
     static async likeProduct(productId) {
         const auth = await AsyncStorage.getItem('token')
         return api.post('others/like', { productId }, {
@@ -150,9 +134,41 @@ class Api {
         });
     }
 
-    static async getSingle(id) {
+    //------CART------//
+    static async getCard(page) {
+        auth = await AsyncStorage.getItem('token')
+        return api.get(`/cart/cartItemList?page=${page || 1}`,{
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
+    static async addToCart(data) {
         const auth = await AsyncStorage.getItem('token')
-        return api.get(`/products/singleProduct?id=${id}`, {
+        return api.post('/cart/addToCart', {
+            productId: data.product.id,
+            quantity: data.quantity,
+            price: data.price,
+        }, {
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
+    static async deleteFromCart(data) {
+        const auth = await AsyncStorage.getItem('token')
+        return api.post('/cart/deleteFromCart', data, {
+            headers: {
+                Authorization: auth
+            },
+        });
+    }
+
+    static async updateCart(data) {
+        const auth = await AsyncStorage.getItem('token')
+        return api.post('cart/updateCount', data, {
             headers: {
                 Authorization: auth
             },

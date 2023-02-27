@@ -5,46 +5,51 @@ import _ from 'lodash';
 import MasonryList from '@react-native-seoul/masonry-list';
 import {useSelector} from 'react-redux';
 import CategoryItem from '../components/CategoryItem';
-import ProductNewItem from '../components/ProductNewItem';
 import NoData from "../components/NoData";
 import Loader from "../components/Loader";
 import Api from "../Api";
+import ShopComponent from "../components/ShopComponent";
+import Utils from "../helpers/Utils";
 
-function Search({route, navigation}) {
+function Search({route}) {
     const [search, setSearch] = useState('')
     const category = useSelector(state => state.reducer.search.category);
     const [isLoading, setIsLoading] = useState(false)
     const [product, setProduct] = useState([])
     const [page, setPage] = useState(1)
-    const loadMore = useCallback(async () => {
-        setPage(+page + 1)
-    }, [])
+    const [pagination, setPagination] = useState(1)
+
     const getData = useCallback(() => {
         setIsLoading(true)
         Api.getData({page, search, filter: route.params || ''}).then(({data}) => {
-            setProduct([...product, ...data.products])
-            // if(search){
-            //     setProduct([...data.products])
-            // }
+            if(search && +page === 1){
+                setProduct(data.products)
+            }else if(search){
+                setProduct(Utils.dataFilterFromDuplicates(product, data.products))
+            } else{
+                setProduct(Utils.dataFilterFromDuplicates(product, data.products))
+            }
+            setPagination(data.totalPages)
             setIsLoading(false)
-        }).catch((e) => console.log(e))
-    }, [page, search, route.params])
-
-    useEffect(() => {
-        navigation.addListener('focus', () => {
-            getData();
-        })
-    },[])
+        }).catch((e) => console.log(e,88))
+    }, [page, product, search, route.params])
+    const loadMore = useCallback(async () => {
+        if (+page < +pagination){
+            setPage(+page + 1)
+        }
+    }, [pagination, page])
     useEffect(() => {
         getData()
     }, [page, search]);
 
     const handleSearch = useCallback( (ev) => {
         setSearch(ev)
+        setPage(1)
     }, []);
 
     useEffect(() => {
-        setSearch(route.params)
+        setSearch(route.params || '')
+        setPage(1)
     }, [route.params])
     return (
         <View style={{flex: 1}}>
@@ -71,9 +76,9 @@ function Search({route, navigation}) {
                     data={product}
                     keyExtractor={() => _.uniqueId()}
                     numColumns={2}
-                    renderItem={({item}) => <ProductNewItem item={item}/>}
+                    renderItem={({item}) => <ShopComponent item={item}/>}
                     onEndReachedThreshold={0}
-                    onEndReached={loadMore}
+                    onEndReached={() => loadMore()}
                     ListFooterComponent={() => <Loader state={isLoading} />}
                 />:
                     <NoData />}
