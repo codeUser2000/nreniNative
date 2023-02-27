@@ -108,8 +108,8 @@ class Api {
         });
     }
 
-    static confirm() {
-        return api.get('/users/confirm');
+    static confirm(data) {
+        return api.post('/users/confirm', data);
     }
 
     static async getProfile() {

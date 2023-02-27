@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {userRegisterRequest} from "../redux/actions/user";
 import LogoHeader from "../components/LogoHeader";
 import SubmitBtn from "../components/SubmitBtn";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Register({navigation}) {
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -32,6 +33,9 @@ function Register({navigation}) {
             Toast.error('Passwords should be same')
         }else {
             await dispatch(userRegisterRequest(formData))
+            AsyncStorage.setItem('email', formData.email)
+                .then(res => true)
+                .catch((e) => console.log(e))
         }
         if(userDataStatus === 'ok'){
             navigation.navigate('InsertCode', 'register')
