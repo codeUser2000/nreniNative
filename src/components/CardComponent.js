@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-
 import Icon from "react-native-vector-icons/MaterialIcons";
 import {API_URL} from "@env";
 
-function CardComponent({item, handleDelete}) {
+function CardComponent({item, handleDelete,handleCountChange}) {
     return (
         <View style={styles.cardItem}>
             <Image style={styles.img} source={{uri:API_URL + item.product.avatar}} resizeMode='cover'/>
@@ -22,11 +22,11 @@ function CardComponent({item, handleDelete}) {
                         </Text>
                     </TouchableOpacity>
                     <View style={styles.countBtn}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleCountChange('-', item)}>
                             <Text style={styles.count}>─</Text>
                         </TouchableOpacity>
                         <TextInput value={item.quantity + ''} style={styles.quantity}/>
-                        <TouchableOpacity onPress={() => handleCountChange('+', item.product.id)}>
+                        <TouchableOpacity onPress={() => handleCountChange('+', item)}>
                             <Text style={styles.count}>+</Text>
                         </TouchableOpacity>
                     </View>

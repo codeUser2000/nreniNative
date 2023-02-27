@@ -1,44 +1,53 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {searchRequest} from '../redux/actions/search';
-import ProductNewItem from '../components/ProductNewItem';
-import category from "../category";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import img from '../assets/images/banner.jpeg';
-import chainRing from '../assets/images/post/chainRing.jpg';
-import {API_URL} from "@env";
-import _ from 'lodash';
-import {FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import ProductByCategory from "../components/ProductByCategory";
-import ring from '../assets/images/post/ring.jpg';
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Api from "../Api";
 import Loader from "../components/Loader";
 import ShopComponent from "../components/ShopComponent";
+import Utils from "../helpers/Utils";
 
 function Home({navigation}) {
     const [isLoading, setIsLoading] = useState(false)
     const [product, setProduct] = useState([])
     const [page, setPage] = useState(1)
-    const loadMore = useCallback(async () => {
-        console.log(56789)
-        setPage(+page + 1)
+    const [pagination, setPagination] = useState(1)
+
+    const setLikeLocal = useCallback((id, bool) => {
+        product.map((p) => {
+            if(+p.id === +id){
+               if (bool){
+                   p.like += 1
+               }else {
+                   p.isLiked -= 1
+               }
+            }
+            return p;
+        })
+
+        setProduct(product)
     }, [])
     const getData = useCallback(() => {
         setIsLoading(true)
         Api.getData({page}).then(({data}) => {
-            setProduct([...product,...data.products])
+            setProduct(Utils.dataFilterFromDuplicates(product, data.products))
+            setPagination(data.totalPages)
             setIsLoading(false)
         }).catch((e) => console.log(e))
     }, [page])
 
-    useEffect(() => {
-        navigation.addListener('focus', () => {
-            getData();
-        })
-    },[])
+    const loadMore = useCallback(async () => {
+        if (+page < +pagination){
+            setPage(+page + 1)
+        }
+    }, [page,pagination])
+
     useEffect(() => {
         getData()
     }, [page]);
+    useEffect(() => {
+        getData()
+    }, []);
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
             <View style={styles.top}>
@@ -47,7 +56,6 @@ function Home({navigation}) {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('ProfileNavigation', { screen: 'Profile' })}>
                     <Icon name='person' size={20} style={styles.topIcon}/>
-
                 </TouchableOpacity>
             </View>
 
@@ -61,9 +69,9 @@ function Home({navigation}) {
                 data={product}
                 keyExtractor={(item) => item.id}
                 numColumns={2}
-                renderItem={({item}) => <ShopComponent item={item}/>}
+                renderItem={({item}) => <ShopComponent setLikeLocal={setLikeLocal} item={item}/>}
                 onEndReachedThreshold={0}
-                onEndReached={loadMore}
+                onEndReached={() => loadMore()}
                 ListFooterComponent={() => <Loader state={isLoading} />}
             />
 
