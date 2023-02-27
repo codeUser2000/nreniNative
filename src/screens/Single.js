@@ -73,11 +73,12 @@ function Single({route, navigation, setLikeLocal}) {
             {!_.isEmpty(data) ?
                 <View style={styles.block}>
                     <View style={styles.top}>
-                        <TouchableOpacity style={styles.undo} onPress={() => navigation.goBack()}>
-                            <Icon style={styles.undo} name='reply' size={22}/>
-                        </TouchableOpacity>
                         <TouchableOpacity style={styles.like} onPress={() => handleLike(product)}>
-                            <Icon style={styles.like} color={isLiked ? "pink" : "#ffece5"} name="favorite" size={20}/>
+                            {isLiked ?
+                                <Icon name='favorite' color='#c31e39' size={25}/>
+                                :
+                                <Icon name='heart-broken' color='#4a4a4a' size={25}/>
+                            }
                         </TouchableOpacity>
                     </View>
                     <Image
@@ -141,28 +142,18 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     like: {
-        width: 30,
-        height: 30,
+        top: 15,
+        right: 15,
+        width: 35,
+        height: 35,
         lineHeight: 30,
+        zIndex: 1000000,
         borderRadius: 25,
         textAlign: 'center',
-        backgroundColor: '#c31e39',
+        alignItems: 'center',
         position: 'absolute',
-        zIndex: 1000000,
-        right: 0,
-
-    },
-    undo: {
-        width: 30,
-        height: 30,
-        lineHeight: 30,
-        borderRadius: 25,
-        color: "#ffece5",
-        textAlign: 'center',
-        backgroundColor: '#c31e39',
-        position: 'absolute',
-        zIndex: 1000000,
-        left: 0,
+        justifyContent: 'center',
+        backgroundColor: '#ffece5',
     },
     avatar: {
         height: '60%',
