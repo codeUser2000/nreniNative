@@ -13,6 +13,7 @@ import ProductByCategory from "../components/ProductByCategory";
 import ring from '../assets/images/post/ring.jpg';
 import Api from "../Api";
 import Loader from "../components/Loader";
+import ShopComponent from "../components/ShopComponent";
 
 function Home({navigation}) {
     const [isLoading, setIsLoading] = useState(false)
@@ -49,23 +50,23 @@ function Home({navigation}) {
 
                 </TouchableOpacity>
             </View>
+
             <View style={styles.banner}>
                 <Image resizeMode="cover" source={img} style={styles.bannerImg}/>
                 <Text style={styles.welcome}>Welcome to SILVER NRENI page</Text>
             </View>
 
-
-            <Text style={{fontSize: 30}}>New product</Text>
             <FlatList
-                numColumns={2}
-                keyExtractor={() => _.uniqueId()}
+                style={styles.shop}
                 data={product}
-                renderItem={({item}) => <ProductNewItem api={API_URL} item={item}/>}
-                style={{flexGrow: 0}}
+                keyExtractor={(item) => item.id}
+                numColumns={2}
+                renderItem={({item}) => <ShopComponent item={item}/>}
                 onEndReachedThreshold={0}
                 onEndReached={loadMore}
                 ListFooterComponent={() => <Loader state={isLoading} />}
             />
+
 
         </View>
     );

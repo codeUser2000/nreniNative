@@ -11,7 +11,6 @@ import ProfileNavigation from './ProfileNavigation';
 import CartNavigation from './CartNavigation';
 import SearchNavigation from './SearchNavigation';
 import AuthNavigation from "./AuthNavigation";
-import ShopNavigation from "./ShopNavigartion";
 
 function AppNav(props) {
     const Tab = createBottomTabNavigator();
@@ -39,16 +38,6 @@ function AppNav(props) {
                                     <Text style={{color: focused ? '#c31e39' : color}}>Search</Text>),
                                 tabBarIcon: (p) => <Icon size={p.size} color={p.focused ? '#c31e39' : p.color}
                                                          name="search"/>,
-                            }}
-                        />
-                        <Tab.Screen
-                            name="ShopNavigation"
-                            component={ShopNavigation}
-                            options={{
-                                tabBarLabel: ({focused, color}) => (
-                                    <Text style={{color: focused ? '#c31e39' : color}}>Shop</Text>),
-                                tabBarIcon: (p) => <Icon size={p.size} color={p.focused ? '#c31e39' : p.color}
-                                                         name="shopping-bag"/>,
                             }}
                         />
                         <Tab.Screen

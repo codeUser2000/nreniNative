@@ -25,6 +25,7 @@ console.log(API_URL)
 
 class Api {
     static getData(data) {
+        console.log(data)
         return api.get(`/products/products?page=${data.page}${data.filter ? `&filter=${data.filter}` : ''}${data.search ? `&searchText=${data.search}` : ''}`, {
             headers: {
                 'Content-Type': 'image/jpeg',

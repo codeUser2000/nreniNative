@@ -22,10 +22,13 @@ function Search({route, navigation}) {
     const getData = useCallback(() => {
         setIsLoading(true)
         Api.getData({page, search, filter: route.params || ''}).then(({data}) => {
-            setProduct([...product,...data.products])
+            setProduct([...product, ...data.products])
+            // if(search){
+            //     setProduct([...data.products])
+            // }
             setIsLoading(false)
         }).catch((e) => console.log(e))
-    }, [page, search])
+    }, [page, search, route.params])
 
     useEffect(() => {
         navigation.addListener('focus', () => {
@@ -66,7 +69,7 @@ function Search({route, navigation}) {
                 {!_.isEmpty(product)?
                     <FlatList
                     data={product}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={() => _.uniqueId()}
                     numColumns={2}
                     renderItem={({item}) => <ProductNewItem item={item}/>}
                     onEndReachedThreshold={0}

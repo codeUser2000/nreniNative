@@ -1,25 +1,39 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View} from "react-native";
+import React, {useCallback} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import {API_URL} from "@env";
+import {useNavigation} from "@react-navigation/native";
 
 function ShopComponent({item}) {
+    const navigation = useNavigation();
+    const handleSingle = useCallback((data) => {
+        navigation.navigate('Single', data.id)
+    }, []);
     return (
-        <View style={styles.block}>
-            <Image style={styles.img} source={{uri:API_URL + item.avatar}} resizeMode='cover' borderRadius={25}/>
-            <View style={styles.textBlock}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.price}>
-                    $ {item.newPrice}
-                    {' '}
-                    {item.oldPrice ?<Text style={styles.oldPrice}>${item.oldPrice}</Text>: null}
-                </Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon name="favorite" size={21} color={"#c31e39"}/>
-                    <Text style={styles.like}>{item.like}</Text>
+        <>
+            <TouchableOpacity onPress={() => handleSingle(item)} style={styles.block}>
+
+                {item.discount !== '0' ?
+                    <View style={styles.top}>
+                        <Text style={styles.discount}>-{item.discount}%</Text>
+                    </View>
+                    : null
+                }
+
+                <Image style={styles.img} source={{uri: API_URL + item.avatar}} resizeMode='cover' borderRadius={25}/>
+                <View style={styles.textBlock}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.price}>
+                        $ {item.newPrice}
+                        {' '}
+                        {item.oldPrice ? <Text style={styles.oldPrice}>${item.oldPrice}</Text> : null}
+                    </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Icon name="favorite" size={21} color={"#c31e39"}/>
+                        <Text style={styles.like}>{item.like}</Text>
+                    </View>
                 </View>
-            </View>
-        </View>
+            </TouchableOpacity></>
     );
 }
 
@@ -30,6 +44,27 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginBottom: 150,
         marginHorizontal: 10,
+        position: 'relative',
+    },
+    top: {
+        top: 5,
+        left: 5,
+        width: 43,
+        height: 43,
+        zIndex: 1000,
+        display: 'flex',
+        borderRadius: 25,
+        textAlign: 'center',
+        position: 'absolute',
+        alignItems: 'center',
+        borderColor: '#c31e39',
+        justifyContent: 'center',
+        backgroundColor: '#c31e39',
+    },
+    discount: {
+        fontSize: 16,
+        color: '#ffece5',
+        fontWeight: '500',
     },
     img: {
         width: '100%',

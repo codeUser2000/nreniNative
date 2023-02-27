@@ -19,6 +19,7 @@ export function userRegisterRequest(formData) {
                 payload: { data }
             })
         } catch (e) {
+            console.log(e)
             dispatch({
                 type: USER_REGISTER_FAIL,
                 payload: {}
