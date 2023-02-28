@@ -3,11 +3,12 @@ import {Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} 
 import _ from 'lodash';
 import {API_URL} from "@env";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteLikeRequest, likeRequest, singleRequest} from "../redux/actions/product";
+import {deleteLikeRequest, likeRequest, productRequest, singleRequest} from "../redux/actions/product";
 import {addToCardRequest} from "../redux/actions/card";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import {Toast} from "toastify-react-native";
 
-function Single({route, navigation, setLikeLocal}) {
+function Single({route, navigation}) {
     const [data, setData] = useState({});
     const [count, setCount] = useState(1);
     const [isLiked, setIsLiked] = useState(1);
@@ -32,17 +33,14 @@ function Single({route, navigation, setLikeLocal}) {
         if (isLiked) {
             setIsLiked(false)
             await dispatch(deleteLikeRequest(product.product.id))
-            // setLikeLocal(product.product.id, false)
-
         } else {
             setIsLiked(true)
             await dispatch(likeRequest(product.product.id))
-            // setLikeLocal(product.product.id, true)
-
         }
+        await dispatch(productRequest())
     }, [isLiked])
 
-    const handleProductCountChange = useCallback((operator) => {
+    const handleProductCountChange = useCallback(async (operator) => {
         if (operator === 'add' && +count < +data.countProduct) {
             setCount(+count + 1);
         } else if (operator === 'delete' && +count > 1) {
@@ -102,10 +100,12 @@ function Single({route, navigation, setLikeLocal}) {
                                     </Text>
                                 </View>
                             </View>
-                            <Text style={styles.desc}>{data.description}</Text>
+                            <ScrollView>
+                                <Text style={styles.desc}>{data.description}</Text>
+                            </ScrollView>
                             <View style={styles.quantity}>
                                 <TouchableOpacity onPress={() => handleProductCountChange('delete')}>
-                                    <Text style={styles.count}>-</Text>
+                                    <Text style={[styles.count, count === 1 || +data.countProduct === 0 ? {color: '#ccc'} : {}]}>-</Text>
                                 </TouchableOpacity>
                                 <TextInput
                                     keyboardType='numeric'
@@ -113,15 +113,21 @@ function Single({route, navigation, setLikeLocal}) {
                                     onChangeText={(ev) => handleChange(ev)}
                                     style={styles.count}/>
                                 <TouchableOpacity onPress={() => handleProductCountChange('add')}>
-                                    <Text style={styles.count}>+</Text>
+                                    <Text style={[styles.count, +count === +data.countProduct || +data.countProduct === 0 ? {color: '#ccc'} : {}]}>+</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.singleBottom}>
                             <TouchableOpacity style={styles.btn}>
-                                <Text style={styles.buy}>Buy Now</Text>
+                                <Text style={styles.buy}>{+data.countProduct === 0 ? 'Not available' : 'Buy Now'}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handleAddToCart(data)} style={styles.addToCard}>
+                            <TouchableOpacity onPress={() =>{
+                                if(+data.countProduct === 0){
+                                    Toast.info('Not available')
+                                }else{
+                                    handleAddToCart(data).then(() => true)
+                                }
+                            }} style={styles.addToCard}>
                                 <Icon name='shopping-cart' style={styles.cardIcon} size={23}/>
                             </TouchableOpacity>
                         </View>
@@ -169,7 +175,7 @@ const styles = StyleSheet.create({
     info: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 15,
         justifyContent: 'space-between',
     },
     title: {

@@ -9,7 +9,6 @@ import Utils from "../helpers/Utils";
 import {useDispatch} from "react-redux";
 
 function Home({navigation}) {
-    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false)
     const [product, setProduct] = useState([])
     const [page, setPage] = useState(1)
@@ -24,6 +23,8 @@ function Home({navigation}) {
         }).catch((e) => console.log(e))
     }, [page])
 
+
+
     const loadMore = useCallback(async () => {
         if (+page < +pagination) {
             setPage(+page + 1)
@@ -31,25 +32,25 @@ function Home({navigation}) {
     }, [page, pagination])
 
     useEffect(() => {
-        getData()
-    }, [page]);
-
-    useEffect(() => {
-        setProduct(product)
-    }, [product]);
-    useEffect(() => {
-        (async () => {
-           await dispatch()
-        })()
+        navigation.addListener('focus', () => {
+            setPage(1)
+            getData()
+        })
     }, []);
+    useEffect(() => {
+        getData()
+    }, [page])
+
+
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
             <View style={styles.top}>
                 <TouchableOpacity style={styles.topIcon} onPress={() => navigation.navigate('Categories')}>
                     <Icon name='grid-view' size={23} style={styles.icon}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.topIcon}
-                                  onPress={() => navigation.navigate('ProfileNavigation', {screen: 'Profile'})}>
+                <TouchableOpacity
+                    style={styles.topIcon}
+                    onPress={() => navigation.navigate('ProfileNavigation', {screen: 'Profile'})}>
                     <Icon name='person' size={25} style={styles.icon}/>
                 </TouchableOpacity>
             </View>

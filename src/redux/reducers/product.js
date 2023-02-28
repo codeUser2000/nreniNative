@@ -1,8 +1,9 @@
-import {SINGLE_PRODUCT_FAIL, SINGLE_PRODUCT_REQUEST, SINGLE_PRODUCT_SUCCESS,} from '../actions/product';
+import {SINGLE_PRODUCT_FAIL, SINGLE_PRODUCT_REQUEST, SINGLE_PRODUCT_SUCCESS,GET_PRODUCT_FAIL, GET_PRODUCT_REQUEST, GET_PRODUCT_SUCCESS,} from '../actions/product';
 
 const initialState = {
     singleData: [],
-    singleStatus: ''
+    singleStatus: '',
+    productData: [],
 }
 
 export default function reducer(state = initialState, action) {
@@ -22,11 +23,24 @@ export default function reducer(state = initialState, action) {
                 singleData: action.payload.data
             }
         }
-        case  SINGLE_PRODUCT_FAIL: {
+        case SINGLE_PRODUCT_FAIL: {
             return {
                 ...state,
                 singleStatus: 'fail',
                 singleData: []
+            }
+        }
+        case GET_PRODUCT_SUCCESS: {
+            console.log(action.payload.data)
+            return {
+                ...state,
+                productData: action.payload.data
+            }
+        }
+        case  GET_PRODUCT_FAIL: {
+            return {
+                ...state,
+                productData: []
             }
         }
 

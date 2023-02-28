@@ -20,10 +20,6 @@ function Profile({navigation}) {
         await logout()
     }, [logout])
 
-    // const handleOrder = useCallback(() => {
-    //
-    // }, [])
-
 
     useEffect(() => {
         (async () => {
@@ -60,7 +56,7 @@ function Profile({navigation}) {
                         <Text style={styles.titles}>About me</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Order')}
+                        onPress={() => navigation.navigate('Orders')}
                         style={styles.buttons}>
                         <Icon
                             color='#c31e39'

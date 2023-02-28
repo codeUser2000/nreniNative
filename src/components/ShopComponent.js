@@ -23,7 +23,7 @@ function ShopComponent({item}) {
                 <Image style={styles.img} source={{uri: API_URL + item.avatar}} resizeMode='cover' borderRadius={25}/>
                 <View style={styles.textBlock}>
                     <Text style={styles.title}>{item.title}</Text>
-                    {item.discount !== 0 ?
+                    {+item.discount !== 0 ?
                         <Text style={styles.price}>
                             $ {item.newPrice}
                             {' '}
