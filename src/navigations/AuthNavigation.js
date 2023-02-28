@@ -8,7 +8,7 @@ function AuthNavigation(props) {
     return (
         <Stack.Navigator initialRouteName="Profile">
             <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
-            <Stack.Screen name="Order" component={Orders} options={{headerShown: false}}/>
+            <Stack.Screen name="Orders" component={Orders} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }

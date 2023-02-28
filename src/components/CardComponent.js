@@ -4,7 +4,6 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import {API_URL} from "@env";
 
 function CardComponent({item, handleDelete, handleCountChange}) {
-    console.log(`'http://10.0.2.2' + ${item.product.avatar}`)
     return (
         <View style={styles.cardItem}>
             <View style={styles.cardItemMain}>
