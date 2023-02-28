@@ -11,22 +11,18 @@ function Orders(props) {
     const order = useSelector(state => state.reducer.orders.orderData)
     useEffect(() => {
         (async () => {
-           await dispatch(orderGetRequest())
+            await dispatch(orderGetRequest())
         })()
     }, [])
     console.log(order)
     return (
-        <View style={{flex:1, backgroundColor:'white'}}>
+        <View style={{flex: 1, backgroundColor: 'white', padding: 15,}}>
             <FlatList
                 data={order}
                 keyExtractor={() => _.uniqueId()}
-                renderItem={({item}) => <OrderItem item={item} /> } />
+                renderItem={({item}) => <OrderItem item={item}/>}/>
         </View>
     );
 }
-const styles = StyleSheet.create({
-    stretch: {
-        height:200,
-    },
-})
+
 export default Orders;

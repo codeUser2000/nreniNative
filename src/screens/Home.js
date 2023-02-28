@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     topIcon: {
         width: 35,
         height: 35,
-        borderRadius: 25,
+        borderRadius: 23,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#c31e39',
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         height: 200,
         marginRight: 15,
         marginBottom: 30,
-        borderRadius: 25,
+        borderRadius: 23,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         width: '50%',
         height: '100%',
         marginRight: 15,
-        borderRadius: 25,
+        borderRadius: 23,
     },
     welcome: {
         width: '50%',

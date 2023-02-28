@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     block: {
         height: 220,
         width: "45%",
-        borderRadius: 25,
+        borderRadius: 23,
         marginBottom: 150,
         marginHorizontal: 10,
         position: 'relative',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         height: 43,
         zIndex: 1000,
         display: 'flex',
-        borderRadius: 25,
+        borderRadius: 23,
         textAlign: 'center',
         position: 'absolute',
         alignItems: 'center',

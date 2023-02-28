@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     cardItem: {
         height: 250,
         padding: 14,
-        marginBottom: 20,
+        marginBottom: 25,
         borderRadius: 30,
         backgroundColor: '#ffece5',
         justifyContent: 'space-between',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     img: {
         width: '32%',
         height: '100%',
-        borderRadius: 25,
+        borderRadius: 23,
     },
     itemDesk: {
         width: '65%',

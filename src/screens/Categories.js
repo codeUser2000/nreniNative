@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     cImage: {
         width: '50%',
         height: '100%',
-        borderRadius: 25,
+        borderRadius: 23,
     },
     cTitle: {
         fontSize: 20,
