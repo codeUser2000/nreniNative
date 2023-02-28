@@ -22,11 +22,13 @@ function CardComponent({item, handleDelete, handleCountChange}) {
             <View style={styles.action}>
                 <View style={styles.countBtn}>
                     <TouchableOpacity style={styles.countBtns} onPress={() => handleCountChange('-', item)}>
-                        <Text style={[styles.count, +item.quantity === 1 || +item.product.countProduct === 0 ? {backgroundColor: '#ccc'} : {}]}>─</Text>
+                        <Text
+                            style={[styles.count, +item.quantity === 1 || +item.product.countProduct === 0 ? {backgroundColor: '#ccc'} : {}]}>─</Text>
                     </TouchableOpacity>
                     <TextInput value={item.quantity + ''} style={styles.quantity}/>
                     <TouchableOpacity onPress={() => handleCountChange('+', item)} style={styles.countBtns}>
-                        <Text style={[styles.count, +item.quantity === +item.product.countProduct || +item.product.countProduct === 0 ? {backgroundColor: '#ccc'} : {}]}>+</Text>
+                        <Text
+                            style={[styles.count, +item.quantity === +item.product.countProduct || +item.product.countProduct === 0 ? {backgroundColor: '#ccc'} : {}]}>+</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iconsBtn}>
@@ -44,26 +46,28 @@ function CardComponent({item, handleDelete, handleCountChange}) {
 
 const styles = StyleSheet.create({
     cardItem: {
-        height: 250,
+        // height: 250,
         padding: 14,
         marginBottom: 25,
-        borderRadius: 30,
+        borderRadius: 20,
         backgroundColor: '#ffece5',
         justifyContent: 'space-between',
     },
     cardItemMain: {
+        height: 180,
+        // height: '79%',
         width: '100%',
-        height: '79%',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     img: {
-        width: '32%',
+        width: '39%',
         height: '100%',
-        borderRadius: 23,
+        marginRight: 15,
+        borderRadius: 20,
     },
     itemDesk: {
-        width: '65%',
+        width: '60%',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -74,6 +78,7 @@ const styles = StyleSheet.create({
     infoTitle: {
         fontSize: 19,
         fontWeight: '600',
+        textTransform: 'capitalize',
     },
     desk: {
         fontSize: 17,
