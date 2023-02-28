@@ -57,6 +57,7 @@ export const UPDATE_CART_SUCCESS = 'UPDATE_CART_SUCCESS';
 export const UPDATE_CART_FAIL = 'UPDATE_CART_FAIL';
 
 export function updateCartRequest(data) {
+    console.log(data)
     return async (dispatch) => {
         try {
             dispatch({

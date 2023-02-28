@@ -32,8 +32,8 @@ function Cart({navigation}) {
     }, [page])
 
     useEffect(() => {
-        getCartData()
-    }, [])
+        setProductData(product)
+    }, [product])
 
     const loadMore = useCallback(() => {
         if (+page < +pagination) {
@@ -47,13 +47,14 @@ function Cart({navigation}) {
         })
     }, [])
     const handleCountChange = useCallback(async (operator, product) => {
+        console.log(operator === '+' && product.product.countProduct >= product.quantity + 1)
+
         if (operator === '+' && product.product.countProduct >= product.quantity + 1) {
             await dispatch(updateCartRequest({
                 productId: product.product.id,
                 count: product.quantity + 1,
                 price: product.product.newPrice,
             }));
-            await dispatch(getCardRequest(page));
 
         } else if (product.quantity > 1 && operator === '-') {
             await dispatch(updateCartRequest({
@@ -61,8 +62,9 @@ function Cart({navigation}) {
                 count: product.quantity - 1,
                 price: product.product.newPrice,
             }));
-            await dispatch(getCardRequest(page));
         }
+        await dispatch(getCardRequest(page));
+
     }, [page]);
 
     const handleDelete = useCallback(async (id) => {

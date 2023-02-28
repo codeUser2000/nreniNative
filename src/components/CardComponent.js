@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import {API_URL} from "@env";
 
 function CardComponent({item, handleDelete, handleCountChange}) {
+    console.log(`'http://10.0.2.2' + ${item.product.avatar}`)
     return (
         <View style={styles.cardItem}>
             <View style={styles.cardItemMain}>
@@ -21,11 +22,11 @@ function CardComponent({item, handleDelete, handleCountChange}) {
             <View style={styles.action}>
                 <View style={styles.countBtn}>
                     <TouchableOpacity style={styles.countBtns} onPress={() => handleCountChange('-', item)}>
-                        <Text style={styles.count}>─</Text>
+                        <Text style={[styles.count, +item.quantity === 1 || +item.product.countProduct === 0 ? {backgroundColor: '#ccc'} : {}]}>─</Text>
                     </TouchableOpacity>
                     <TextInput value={item.quantity + ''} style={styles.quantity}/>
                     <TouchableOpacity onPress={() => handleCountChange('+', item)} style={styles.countBtns}>
-                        <Text style={styles.count}>+</Text>
+                        <Text style={[styles.count, +item.quantity === +item.product.countProduct || +item.product.countProduct === 0 ? {backgroundColor: '#ccc'} : {}]}>+</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iconsBtn}>

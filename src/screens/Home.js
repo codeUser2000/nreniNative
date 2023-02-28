@@ -6,27 +6,15 @@ import Api from "../Api";
 import Loader from "../components/Loader";
 import ShopComponent from "../components/ShopComponent";
 import Utils from "../helpers/Utils";
+import {useDispatch} from "react-redux";
 
 function Home({navigation}) {
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false)
     const [product, setProduct] = useState([])
     const [page, setPage] = useState(1)
     const [pagination, setPagination] = useState(1)
 
-    const setLikeLocal = useCallback((id, bool) => {
-        product.map((p) => {
-            if (+p.id === +id) {
-                if (bool) {
-                    p.like += 1
-                } else {
-                    p.isLiked -= 1
-                }
-            }
-            return p;
-        })
-
-        setProduct(product)
-    }, [])
     const getData = useCallback(() => {
         setIsLoading(true)
         Api.getData({page}).then(({data}) => {
@@ -45,8 +33,14 @@ function Home({navigation}) {
     useEffect(() => {
         getData()
     }, [page]);
+
     useEffect(() => {
-        getData()
+        setProduct(product)
+    }, [product]);
+    useEffect(() => {
+        (async () => {
+           await dispatch()
+        })()
     }, []);
     return (
         <View style={{backgroundColor: 'white', flex: 1, padding: 15}}>
@@ -70,7 +64,7 @@ function Home({navigation}) {
                 data={product}
                 keyExtractor={(item) => item.id}
                 numColumns={2}
-                renderItem={({item}) => <ShopComponent setLikeLocal={setLikeLocal} item={item}/>}
+                renderItem={({item}) => <ShopComponent item={item}/>}
                 onEndReachedThreshold={0}
                 onEndReached={() => loadMore()}
                 ListFooterComponent={() => <Loader state={isLoading}/>}
