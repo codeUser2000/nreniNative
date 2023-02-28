@@ -23,11 +23,17 @@ function ShopComponent({item}) {
                 <Image style={styles.img} source={{uri: API_URL + item.avatar}} resizeMode='cover' borderRadius={25}/>
                 <View style={styles.textBlock}>
                     <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.price}>
-                        $ {item.newPrice}
-                        {' '}
-                        {item.oldPrice ? <Text style={styles.oldPrice}>${item.oldPrice}</Text> : null}
-                    </Text>
+                    {item.discount !== 0 ?
+                        <Text style={styles.price}>
+                            $ {item.newPrice}
+                            {' '}
+                            <Text style={styles.oldPrice}>${item.oldPrice}</Text>
+                        </Text>
+                        :
+                        <Text style={styles.price}>
+                            $ {item.newPrice}
+                        </Text>
+                    }
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name="favorite" size={21} color={"#c31e39"}/>
                         <Text style={styles.like}>{item.like}</Text>
