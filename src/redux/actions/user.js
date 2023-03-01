@@ -57,6 +57,7 @@ export const USER_UPDATE_REQUEST = 'USER_UPDATE_REQUEST';
 export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
 export const USER_UPDATE_FAIL = 'USER_UPDATE_FAIL';
 export function userUpdateRequest(formData) {
+    console.log(formData)
     return async (dispatch) => {
         try {
             dispatch({

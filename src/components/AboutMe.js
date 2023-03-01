@@ -15,13 +15,13 @@ function AboutMe({show, setShow, data}) {
     useEffect(() => {
         setProfile({
             firstName: data.firstName || '',
-            lastName: data.lastName|| '',
+            lastName: data.lastName || '',
             birthYear: new Date(data.birthYear) || new Date(),
             phone: data.phone || '',
             country: data.country || '',
             city: data.city || '',
             street: data.street || '',
-            postal: data.postal|| '',
+            postal: data.postal || '',
         });
     }, [data]);
 
@@ -30,6 +30,10 @@ function AboutMe({show, setShow, data}) {
     }, [profile])
 
     const handleChange = useCallback((key, value) => {
+        if (key === 'birthYear') {
+            const result = value.toISOString().split('T')[0]
+            setProfile((prev) => ({...prev, birthYear: result}))
+        }
         setProfile((prev) => ({
             ...prev,
             [key]: value,
